@@ -1,14 +1,7 @@
 import React from "react";
 
-import { Outlet } from "react-router";
-
 const Products: React.FC = (): JSX.Element => {
-  return (
-    <>
-      <p>products</p>
-      <Outlet />
-    </>
-  );
+  return <p>products</p>;
 };
 
 export default Products;

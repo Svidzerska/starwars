@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Outlet } from "react-router-dom";
 
 import "./App.css";
 
@@ -17,11 +17,12 @@ const App: React.FC = (): JSX.Element => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Signin />} />
+        <Route index element={<Signin />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/products" element={<PrivateRoute authed={isAuth} component={Products} />}>
-          <Route path="/products/people" element={<People />} />
-          <Route path="/products/starships" element={<Starships />} />
+        <Route path="/products" element={<PrivateRoute authed={isAuth} component={<Outlet />} />}>
+          <Route index element={<Products />} />
+          <Route path="people" element={<People />} />
+          <Route path="starships" element={<Starships />} />
         </Route>
       </Routes>
     </Router>
