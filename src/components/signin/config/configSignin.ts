@@ -4,24 +4,11 @@ export const configSignin = [
   {
     field: "username",
     type: "text",
-    validations: {
-      onChange: [
-        {
-          method: validatingFunctions.isRightLength,
-          param: 6,
-        },
-      ],
-    },
+    validations: [validatingFunctions.checkLength],
   },
   {
     field: "confirmPassword",
     type: "password",
-    validations: {
-      onChange: [
-        {
-          method: validatingFunctions.isConfirmPass,
-        },
-      ],
-    },
+    validations: [validatingFunctions.checkConfirmPass],
   },
 ];

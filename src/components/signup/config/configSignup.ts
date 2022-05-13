@@ -4,40 +4,19 @@ export const configSignup = [
   {
     field: "username",
     type: "text",
-    validations: {
-      onChange: [
-        {
-          method: validatingFunctions.isRightLength,
-          param: 6,
-        },
-      ],
-    },
+    placeholder: "Username",
+    validationMethods: [validatingFunctions.checkLength],
   },
   {
     field: "password",
     type: "password",
-    validations: {
-      onChange: [
-        {
-          method: validatingFunctions.isPass,
-          param: /\d[a-zA-Z]|[a-zA-Z]\d/,
-        },
-        {
-          method: validatingFunctions.isRightLength,
-          param: 6,
-        },
-      ],
-    },
+    placeholder: "Password",
+    validationMethods: [validatingFunctions.checkPass, validatingFunctions.checkLength],
   },
   {
     field: "confirmPassword",
     type: "password",
-    validations: {
-      onChange: [
-        {
-          method: validatingFunctions.isConfirmPass,
-        },
-      ],
-    },
+    placeholder: "Confirm Password",
+    validationMethods: [validatingFunctions.checkConfirmPass],
   },
 ];

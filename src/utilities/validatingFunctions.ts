@@ -1,32 +1,32 @@
 interface ValidatingFunctions {
-  isRightLength: Function;
-  isEmail: Function;
-  isPass: Function;
-  isConfirmPass: Function;
+  checkLength: Function;
+  checkEmail: Function;
+  checkPass: Function;
+  checkConfirmPass: Function;
 }
 
 const validatingFunctions: ValidatingFunctions = {
-  isRightLength: (val: string, minLength: number) => {
-    return val.length >= minLength && val.length <= 20
+  checkLength: (val: string) => {
+    return val.length >= 6 && val.length <= 20
       ? { valid: true, name: "name", error: "" }
-      : { valid: false, name: "name", error: `from ${minLength} to 20 symbols are needed` };
+      : { valid: false, name: "name", error: `from 6 to 20 symbols are needed` };
   },
 
-  isEmail: (val: string, regExParam: RegExp) => {
-    const regEx: RegExp = regExParam || /^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/;
-    return regEx.test(val)
+  checkEmail: (val: string) => {
+    const regExp: RegExp = /^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/;
+    return regExp.test(val)
       ? { valid: true, name: "email", error: "" }
       : { valid: false, name: "email", error: "it is not an email" };
   },
 
-  isPass: (val: string, regExParam: RegExp) => {
-    const regex: RegExp = regExParam || /\d[a-zA-Z]|[a-zA-Z]\d/;
-    return regex.test(val)
+  checkPass: (val: string) => {
+    const regExp: RegExp = /\d[a-zA-Z]|[a-zA-Z]\d/;
+    return regExp.test(val)
       ? { valid: true, name: "password", error: "" }
       : { valid: false, name: "password", error: "at least 1 digit and 1 letter are expected" };
   },
 
-  isConfirmPass: (val: string, val_first: string) => {
+  checkConfirmPass: (val: string, val_first: string) => {
     return val_first === val
       ? { valid: true, name: "confirm_password", error: "" }
       : { valid: false, name: "confirm_password", error: "password isn't confirmed" };

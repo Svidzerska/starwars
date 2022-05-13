@@ -5,10 +5,15 @@ import FormBuilder from "../utilityComponents/FormBuilder";
 import { configSignup } from "./config/configSignup";
 
 const Signup: React.FC = (): JSX.Element => {
+
+  const handleSubmit = (): void => {
+    console.log(configSignup);
+  }
+
   return (
     <>
       <p>sign up</p>
-      <FormBuilder config={configSignup} />
+      <FormBuilder config={configSignup} formName="Register" formActionName="Register" onSubmitToDo={handleSubmit} />
     </>
   );
 };
