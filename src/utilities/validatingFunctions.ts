@@ -9,7 +9,7 @@ const validatingFunctions: ValidatingFunctions = {
   checkLength: (val: string) => {
     return val.length >= 6 && val.length <= 20
       ? { valid: true, name: "name", error: "" }
-      : { valid: false, name: "name", error: `from 6 to 20 symbols are needed` };
+      : { valid: false, name: "name", error: "from 6 to 20 symbols are needed" };
   },
 
   checkEmail: (val: string) => {

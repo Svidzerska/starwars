@@ -50,12 +50,16 @@ const FormBuilder: React.FC<Props> = ({ config, formName, formActionName, onSubm
     return (
       <fieldset key={name}>
         <label htmlFor={name}>
-          {validationResult.map((element) => (
-            <>
-              <span>{element?.error}</span>
-              <br />
-            </>
-          ))}
+          {validationResult.map(
+            (element) =>
+              element &&
+              element?.error !== "" && (
+                <>
+                  <span>{element?.error}</span>
+                  <br />
+                </>
+              )
+          )}
         </label>
         <br />
         <input

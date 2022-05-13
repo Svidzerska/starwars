@@ -3,9 +3,9 @@ import validatingFunctions from "../../../utilities/validatingFunctions";
 export const configSignup = [
   {
     fieldName: "username",
-    type: "text",
-    placeholder: "Username",
-    validationMethods: [validatingFunctions.checkLength],
+    type: "email",
+    placeholder: "E-mail as Username",
+    validationMethods: [validatingFunctions.checkEmail],
   },
   {
     fieldName: "password",
