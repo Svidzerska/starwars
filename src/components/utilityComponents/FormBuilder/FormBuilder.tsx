@@ -1,7 +1,9 @@
 import React, { FormEvent, useEffect, useState } from "react";
 
-import { Config } from "../interfaces/Config";
-import { ValidationResult } from "../interfaces/ValidationResult";
+import "./formBuilder.scss";
+
+import { Config } from "../../interfaces/Config";
+import { ValidationResult } from "../../interfaces/ValidationResult";
 
 interface Props {
   config: Config[];
@@ -49,19 +51,16 @@ const FormBuilder: React.FC<Props> = ({ config, formName, formActionName, onSubm
 
     return (
       <fieldset key={name}>
-        <label htmlFor={name}>
-          {validationResult.map(
-            (element) =>
-              element &&
-              element?.error !== "" && (
-                <>
-                  <span>{element?.error}</span>
-                  <br />
-                </>
-              )
-          )}
-        </label>
-        <br />
+        {validationResult.map(
+          (element) =>
+            element &&
+            element?.error !== "" && (
+              <label htmlFor={name}>
+                <i>{element?.error}</i>
+                <br />
+              </label>
+            )
+        )}
         <input
           id={name}
           type={field.type}

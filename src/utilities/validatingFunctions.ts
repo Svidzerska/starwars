@@ -9,14 +9,14 @@ const validatingFunctions: ValidatingFunctions = {
   checkLength: (val: string) => {
     return val.length >= 6 && val.length <= 20
       ? { valid: true, name: "name", error: "" }
-      : { valid: false, name: "name", error: "from 6 to 20 symbols are needed" };
+      : { valid: false, name: "name", error: "from 6 to 20 symbols are required" };
   },
 
   checkEmail: (val: string) => {
     const regExp: RegExp = /^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/;
     return regExp.test(val)
       ? { valid: true, name: "email", error: "" }
-      : { valid: false, name: "email", error: "it is not an email" };
+      : { valid: false, name: "email", error: "it isn't an email" };
   },
 
   checkPass: (val: string) => {

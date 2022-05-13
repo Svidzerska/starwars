@@ -1,6 +1,9 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-import FormBuilder from "../utilityComponents/FormBuilder";
+import "./signup.scss";
+
+import FormBuilder from "../utilityComponents/FormBuilder/FormBuilder";
 
 import { configSignup } from "./config/configSignup";
 
@@ -10,10 +13,10 @@ const Signup: React.FC = (): JSX.Element => {
   };
 
   return (
-    <>
-      <p>sign up</p>
+    <main className="signup">
       <FormBuilder config={configSignup} formName="Register" formActionName="Register" onSubmitToDo={handleSubmit} />
-    </>
+      <Link to="/">Member Login</Link>
+    </main>
   );
 };
 
