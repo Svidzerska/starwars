@@ -16,6 +16,10 @@ const FormBuilder: React.FC<Props> = ({ config, formName, formActionName, onSubm
   const [isValid, setValid] = useState<boolean>(false);
 
   useEffect(() => {
+    validInputsArray.includes(undefined) ? setValid(false) : setValid(true);
+  }, [values]);
+
+  useEffect(() => {
     console.log(isValid);
   }, [isValid]);
 
@@ -30,21 +34,23 @@ const FormBuilder: React.FC<Props> = ({ config, formName, formActionName, onSubm
     setValues({ ...values, [id]: value });
   };
 
-  const valid = (a: any) => {
-    console.log(a);
-  };
+  let validInputsArray: (ValidResult | undefined)[] = [];
 
   const listOfFields: JSX.Element[] = config.map((field: Config) => {
     const name = field.fieldName;
 
-    const validResult: ValidResult[] = field.validationMethods.map((rule) => {
+    const validationResult: ValidResult[] = field.validationMethods.map((rule) => {
       return values[name] && rule(values[name], password);
     });
+
+    let validInput: ValidResult | undefined = validationResult.find((element) => element?.valid);
+
+    validInputsArray.push(validInput);
 
     return (
       <fieldset key={name}>
         <label htmlFor={name}>
-          {validResult.map((element) => (
+          {validationResult.map((element) => (
             <>
               <span>{element?.error}</span>
               <br />
@@ -66,8 +72,9 @@ const FormBuilder: React.FC<Props> = ({ config, formName, formActionName, onSubm
 
   return (
     <section className="card">
+      {isValid ? "yeees" : "nooooo"}
       <h1>{formName}</h1>
-      <form onSubmit={(): void => onSubmitToDo()}>
+      <form onSubmit={isValid ? onSubmitToDo() : undefined}>
         {listOfFields}
         <input type="submit" value={formActionName} />
       </form>

@@ -5,10 +5,9 @@ import FormBuilder from "../utilityComponents/FormBuilder";
 import { configSignup } from "./config/configSignup";
 
 const Signup: React.FC = (): JSX.Element => {
-
   const handleSubmit = (): void => {
-    console.log(configSignup);
-  }
+    console.log("yeeeeeeeeee");
+  };
 
   return (
     <>
