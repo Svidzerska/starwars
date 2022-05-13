@@ -1,5 +1,5 @@
 export interface Config {
-  field: string;
+  fieldName: string;
   type: string;
   placeholder: string;
   validationMethods: Function[];
