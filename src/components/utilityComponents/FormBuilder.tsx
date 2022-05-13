@@ -1,7 +1,7 @@
 import React, { FormEvent, useEffect, useState } from "react";
 
 import { Config } from "../interfaces/Config";
-import { ValidResult } from "../interfaces/ValidResult";
+import { ValidationResult } from "../interfaces/ValidationResult";
 
 interface Props {
   config: Config[];
@@ -34,16 +34,16 @@ const FormBuilder: React.FC<Props> = ({ config, formName, formActionName, onSubm
     setValues({ ...values, [id]: value });
   };
 
-  let validInputsArray: (ValidResult | undefined)[] = [];
+  let validInputsArray: (ValidationResult | undefined)[] = [];
 
   const listOfFields: JSX.Element[] = config.map((field: Config) => {
     const name = field.fieldName;
 
-    const validationResult: ValidResult[] = field.validationMethods.map((rule) => {
+    const validationResult: ValidationResult[] = field.validationMethods.map((rule) => {
       return values[name] && rule(values[name], password);
     });
 
-    let validInput: ValidResult | undefined = validationResult.find((element) => element?.valid);
+    let validInput: ValidationResult | undefined = validationResult.find((element) => element?.valid);
 
     validInputsArray.push(validInput);
 
@@ -74,9 +74,9 @@ const FormBuilder: React.FC<Props> = ({ config, formName, formActionName, onSubm
     <section className="card">
       {isValid ? "yeees" : "nooooo"}
       <h1>{formName}</h1>
-      <form onSubmit={isValid ? onSubmitToDo() : undefined}>
+      <form onSubmit={(): void => onSubmitToDo()}>
         {listOfFields}
-        <input type="submit" value={formActionName} />
+        <input type="submit" value={formActionName} disabled={!isValid} />
       </form>
     </section>
   );
