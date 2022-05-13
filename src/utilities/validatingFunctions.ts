@@ -12,15 +12,15 @@ const validatingFunctions: ValidatingFunctions = {
       : { valid: false, name: "name", error: `from ${minLength} to 20 symbols are needed` };
   },
 
-  isEmail: (val: string, regEx: RegExp) => {
-    const regex: RegExp = regEx || /^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/;
-    return regex.test(val)
+  isEmail: (val: string, regExParam: RegExp) => {
+    const regEx: RegExp = regExParam || /^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/;
+    return regEx.test(val)
       ? { valid: true, name: "email", error: "" }
       : { valid: false, name: "email", error: "it is not an email" };
   },
 
-  isPass: (val: string) => {
-    const regex: RegExp = /\d[a-zA-Z]|[a-zA-Z]\d/;
+  isPass: (val: string, regExParam: RegExp) => {
+    const regex: RegExp = regExParam || /\d[a-zA-Z]|[a-zA-Z]\d/;
     return regex.test(val)
       ? { valid: true, name: "password", error: "" }
       : { valid: false, name: "password", error: "at least 1 digit and 1 letter are expected" };
