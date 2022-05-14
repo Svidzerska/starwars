@@ -1,10 +1,12 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 
 import usersInfoReducer from "../features/usersInfoSlice";
+import productsReducer from "../features/products/productsSlice";
 
 export const store = configureStore({
   reducer: {
     users: usersInfoReducer,
+    products: productsReducer,
   },
 });
 
