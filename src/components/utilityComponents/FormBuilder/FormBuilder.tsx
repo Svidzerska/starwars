@@ -1,4 +1,5 @@
 import React, { FormEvent, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 import "./formBuilder.scss";
 
@@ -10,20 +11,32 @@ interface Props {
   formName: string;
   formActionName: string;
   onSubmitToDo: Function;
+  link: string;
+  linkName: string;
+  updateUsers: Function;
 }
 
-const FormBuilder: React.FC<Props> = ({ config, formName, formActionName, onSubmitToDo }): JSX.Element => {
+const FormBuilder: React.FC<Props> = ({
+  config,
+  formName,
+  formActionName,
+  onSubmitToDo,
+  link,
+  linkName,
+  updateUsers,
+}): JSX.Element => {
   const [values, setValues] = useState<{ [id: string]: string }>({});
   const [password, setPassword] = useState<string>("");
   const [isValid, setValid] = useState<boolean>(false);
 
   useEffect(() => {
     validInputsArray.includes(undefined) ? setValid(false) : setValid(true);
+    console.log(values);
   }, [values]);
 
   useEffect(() => {
-    console.log(isValid);
-  }, [isValid]);
+    isValid && updateUsers(values);
+  }, [isValid, values]);
 
   useEffect(() => {
     setPassword(values.password);
@@ -77,10 +90,11 @@ const FormBuilder: React.FC<Props> = ({ config, formName, formActionName, onSubm
     <section className="card">
       {isValid ? "yeees" : "nooooo"}
       <h1>{formName}</h1>
-      <form onSubmit={(): void => onSubmitToDo()}>
+      <form onSubmit={(e): void => onSubmitToDo(e)}>
         {listOfFields}
         <input type="submit" value={formActionName} disabled={!isValid} />
       </form>
+      <Link to={link}>{linkName}</Link>
     </section>
   );
 };
