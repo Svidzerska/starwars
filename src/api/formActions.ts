@@ -6,56 +6,16 @@ export const formAction = {
   signup: (users: User[]) => {
     return wait(2000).then(() => {
       localStorage.setItem("Users", JSON.stringify(users));
-
-      // const usersFromStorage = localStorage.getItem("Users");
-      // console.log(usersFromStorage);
-      // console.log(users);
-
-      // if (!usersFromStorage) {
-      //   console.log(11111);
-      //   localStorage.setItem("Users", JSON.stringify(users));
-      // } else if (usersFromStorage) {
-      //   console.log(222222);
-      //   const usersFromStorageParse = JSON.parse(usersFromStorage);
-      //   console.log(usersFromStorageParse.length === 0);
-      //   if (usersFromStorageParse.length === 0 && users.length !== 0) {
-      //     localStorage.setItem("Users", JSON.stringify(users));
-      //   } else if (usersFromStorageParse.length !== 0 && users.length === 0) {
-      //     console.log("without change");
-      //   } else if (usersFromStorageParse.length !== 0 && users.length !== 0) {
-      //     console.log(3333);
-      //     localStorage.setItem("Users", JSON.stringify(users.concat(usersFromStorageParse)));
-      //   }
-      // }
     });
   },
+
   getUsers: () => {
     return wait(2000).then(() => {
       const usersFromStorage = localStorage.getItem("Users");
-      console.log(usersFromStorage);
       if (usersFromStorage) {
         const usersFromStorageParse = JSON.parse(usersFromStorage);
         return usersFromStorageParse;
       }
-
-      // console.log(users);
-
-      // if (!usersFromStorage) {
-      //   console.log(11111);
-      //   localStorage.setItem("Users", JSON.stringify(users));
-      // } else if (usersFromStorage) {
-      //   console.log(222222);
-      //   const usersFromStorageParse = JSON.parse(usersFromStorage);
-      //   console.log(usersFromStorageParse.length === 0);
-      //   if (usersFromStorageParse.length === 0 && users.length !== 0) {
-      //     localStorage.setItem("Users", JSON.stringify(users));
-      //   } else if (usersFromStorageParse.length !== 0 && users.length === 0) {
-      //     console.log("without change");
-      //   } else if (usersFromStorageParse.length !== 0 && users.length !== 0) {
-      //     console.log(3333);
-      //     localStorage.setItem("Users", JSON.stringify(users.concat(usersFromStorageParse)));
-      //   }
-      // }
     });
   },
 

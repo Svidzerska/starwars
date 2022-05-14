@@ -37,12 +37,15 @@ const FormBuilder: React.FC<Props> = ({
   const [isValid, setValid] = useState<boolean>(false);
 
   useEffect(() => {
+    isSignupSubmit && setValues({});
+  }, [isSignupSubmit]);
+
+  useEffect(() => {
     dispatch(getUsers());
-  }, [, values]);
+  }, []);
 
   useEffect(() => {
     validInputsArray.includes(undefined) ? setValid(false) : setValid(true);
-    console.log(values);
   }, [values]);
 
   useEffect(() => {
@@ -64,6 +67,7 @@ const FormBuilder: React.FC<Props> = ({
 
   const listOfFields: JSX.Element[] = config.map((field: Config) => {
     const name = field.fieldName;
+    console.log(values[name]);
 
     const validationResult: ValidationResult[] = field.validationMethods.map((rule) => {
       return values[name] && rule(values[name], password);
@@ -90,7 +94,7 @@ const FormBuilder: React.FC<Props> = ({
           type={field.type}
           placeholder={field.placeholder}
           onChange={handleChange}
-          value={values[name]}
+          value={values[name] ? values[name] : ""}
         />
         <br />
       </fieldset>
@@ -99,7 +103,6 @@ const FormBuilder: React.FC<Props> = ({
 
   return (
     <section className="card">
-      {isValid ? "yeees" : "nooooo"}
       <h1>{formName}</h1>
       <form onSubmit={(e): void => onSubmitToDo(e)}>
         {listOfFields}

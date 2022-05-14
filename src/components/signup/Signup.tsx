@@ -11,7 +11,6 @@ import { configSignup } from "./config/configSignup";
 import { User } from "../../components/interfaces/User";
 
 import FormBuilder from "../utilityComponents/FormBuilder/FormBuilder";
-import { PayloadAction } from "@reduxjs/toolkit";
 
 const Signup: React.FC = (): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -24,7 +23,11 @@ const Signup: React.FC = (): JSX.Element => {
   const [isExistUser, setExistUser] = useState<boolean>(false);
 
   useEffect(() => {
-    users.length !== 0 && dispatch(signup(users));
+    isSignupSubmit && dispatch(getUsers()).then(() => dispatch(setSignupSubmit(false)));
+  }, [isSignupSubmit]);
+
+  useEffect(() => {
+    users.length !== 0 && dispatch(signup(users)).then(() => dispatch(setSignupSubmit(true)));
   }, [users]);
 
   const updateUsers = (__values: User): void => {
@@ -40,12 +43,9 @@ const Signup: React.FC = (): JSX.Element => {
     if (repeatUser) {
       setExistUser(true);
     } else {
-      console.log(usersFromStorage);
-      dispatch(setUsers([...usersFromStorage, values]));
+      usersFromStorage ? dispatch(setUsers([...usersFromStorage, values])) : dispatch(setUsers([values]));
       setExistUser(false);
     }
-
-    dispatch(setSignupSubmit(true));
   };
 
   return (
