@@ -2,13 +2,15 @@ import validatingFunctions from "../../../utilities/validatingFunctions";
 
 export const configSignin = [
   {
-    field: "username",
-    type: "text",
-    validations: [validatingFunctions.checkLength],
+    fieldName: "username",
+    type: "email",
+    placeholder: "E-mail as Username",
+    validationMethods: [validatingFunctions.checkEmail],
   },
   {
-    field: "confirmPassword",
+    fieldName: "password",
     type: "password",
-    validations: [validatingFunctions.checkConfirmPass],
+    placeholder: "Password",
+    validationMethods: [validatingFunctions.checkPass],
   },
 ];

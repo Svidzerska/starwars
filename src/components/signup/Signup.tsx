@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 
 import "./signup.scss";
@@ -50,12 +51,15 @@ const Signup: React.FC = (): JSX.Element => {
 
   return (
     <main className="signup">
+      <Link to="/" className="switcher">
+        Sign in
+      </Link>
       <i className="signup__warning">{isExistUser && "the user already exists, please sign in"}</i>
       <FormBuilder
         updateUsers={updateUsers}
         config={configSignup}
         formName="Register"
-        formActionName="Register"
+        formActionName="REGISTER"
         onSubmitToDo={handleSubmit}
         link="/"
         linkName="Member Login"

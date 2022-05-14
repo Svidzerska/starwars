@@ -1,18 +1,13 @@
-.signup {
-  background-color: rgb(40, 218, 197);
+.signin {
+  background-color: rgb(255, 140, 74);
   text-align: center;
   height: 100vh;
   padding: 50px;
-
   .switcher {
     display: block;
     padding: 10px;
     color: rgb(17, 17, 131);
     text-decoration: none;
     cursor: pointer;
-  }
-
-  .signup__warning {
-    color: red;
   }
 }

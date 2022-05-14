@@ -8,6 +8,7 @@ interface InitialState {
   users: User[];
   isSignupSubmit: boolean;
   usersFromStorage: object;
+  isAuthed: boolean;
 }
 
 interface Data {
@@ -18,6 +19,7 @@ const initialState: InitialState = {
   users: [],
   isSignupSubmit: false,
   usersFromStorage: [],
+  isAuthed: false,
 };
 
 export const signup = createAsyncThunk<void, User[]>("signup/setSignup", async (users: User[]) => {
@@ -40,6 +42,9 @@ export const usersInfoSlice = createSlice({
     setSignupSubmit: (state: InitialState, action: PayloadAction<boolean>) => {
       state.isSignupSubmit = action.payload;
     },
+    setAuthed: (state: InitialState, action: PayloadAction<boolean>) => {
+      state.isAuthed = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getUsers.fulfilled, (state, action) => {
@@ -54,6 +59,6 @@ export const usersInfoSlice = createSlice({
   },
 });
 
-export const { setUsers, setSignupSubmit } = usersInfoSlice.actions;
+export const { setUsers, setSignupSubmit, setAuthed } = usersInfoSlice.actions;
 
 export default usersInfoSlice.reducer;
