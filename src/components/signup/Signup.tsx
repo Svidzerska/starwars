@@ -3,29 +3,28 @@ import { useAppSelector, useAppDispatch } from "../../app/hooks";
 
 import "./signup.scss";
 
-import { setUsers } from "../../features/usersInfoSlice";
+import { getUsers, setUsers } from "../../features/usersInfoSlice";
+import { setSignupSubmit } from "../../features/usersInfoSlice";
 import { signup } from "../../features/usersInfoSlice";
 
 import { configSignup } from "./config/configSignup";
 import { User } from "../../components/interfaces/User";
 
 import FormBuilder from "../utilityComponents/FormBuilder/FormBuilder";
+import { PayloadAction } from "@reduxjs/toolkit";
 
 const Signup: React.FC = (): JSX.Element => {
   const dispatch = useAppDispatch();
 
   const users: User[] = useAppSelector((state) => state.users.users);
+  const isSignupSubmit: boolean = useAppSelector((state) => state.users.isSignupSubmit);
+  const usersFromStorage: any = useAppSelector((state) => state.users.usersFromStorage);
 
   const [values, setValues] = useState<User>({ username: "", password: "", confirmPassword: "" });
   const [isExistUser, setExistUser] = useState<boolean>(false);
 
-  // useEffect(() => {
-  //   console.log(values);
-  // }, [values]);
-
   useEffect(() => {
-    console.log(users);
-    dispatch(signup(users));
+    users.length !== 0 && dispatch(signup(users));
   }, [users]);
 
   const updateUsers = (__values: User): void => {
@@ -41,9 +40,12 @@ const Signup: React.FC = (): JSX.Element => {
     if (repeatUser) {
       setExistUser(true);
     } else {
-      dispatch(setUsers(values));
+      console.log(usersFromStorage);
+      dispatch(setUsers([...usersFromStorage, values]));
       setExistUser(false);
     }
+
+    dispatch(setSignupSubmit(true));
   };
 
   return (

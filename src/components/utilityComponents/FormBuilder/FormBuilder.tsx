@@ -1,7 +1,10 @@
 import React, { FormEvent, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useAppSelector, useAppDispatch } from "../../../app/hooks";
 
 import "./formBuilder.scss";
+
+import { getUsers } from "../../../features/usersInfoSlice";
 
 import { Config } from "../../interfaces/Config";
 import { ValidationResult } from "../../interfaces/ValidationResult";
@@ -25,9 +28,17 @@ const FormBuilder: React.FC<Props> = ({
   linkName,
   updateUsers,
 }): JSX.Element => {
+  const dispatch = useAppDispatch();
+
+  const isSignupSubmit: boolean = useAppSelector((state) => state.users.isSignupSubmit);
+
   const [values, setValues] = useState<{ [id: string]: string }>({});
   const [password, setPassword] = useState<string>("");
   const [isValid, setValid] = useState<boolean>(false);
+
+  useEffect(() => {
+    dispatch(getUsers());
+  }, [, values]);
 
   useEffect(() => {
     validInputsArray.includes(undefined) ? setValid(false) : setValid(true);
