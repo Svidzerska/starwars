@@ -21,6 +21,13 @@ const Signin: React.FC = (): JSX.Element => {
   const loginProcessInfo: string = useAppSelector((state) => state.users.signinMessage);
 
   const [values, setValues] = useState<User>({ username: "", password: "" });
+  const [isLogout, setLogout] = useState<boolean>(false);
+  const [isSignin, setSignin] = useState<boolean>(false);
+
+  useEffect(() => {
+    console.log(isLogout);
+    isLogout && typeof currentUser !== "string" && setLogout(false);
+  }, [, currentUser]);
 
   useEffect(() => {
     console.log(currentUser);
@@ -47,10 +54,13 @@ const Signin: React.FC = (): JSX.Element => {
     } else {
       navigate("/signup");
     }
+    setSignin(true);
   };
 
   const handleLogout = (): void => {
     dispatch(logout()).then(() => dispatch(getCurrentUser()));
+    setLogout(true);
+    setSignin(false);
   };
 
   return (
@@ -61,16 +71,22 @@ const Signin: React.FC = (): JSX.Element => {
       <Link to="products" className="switcher">
         Products
       </Link>
-      <p>{loginProcessInfo !== "" ? loginProcessInfo : ""}</p>
-      <p>
+      <p className="signin__info">{isSignin ? (loginProcessInfo !== "" ? loginProcessInfo : "") : ""}</p>
+      <p className="signin__info">
         {currentUser === "wait"
           ? "please wait for server response..."
           : currentUser
           ? `You are login as ${currentUser}`
           : `no current user`}
       </p>
-      <p>{currentUser ? (logoutProcessInfo !== "" ? logoutProcessInfo : "") : ""}</p>
-      <button onClick={handleLogout}>Log out</button>
+      <p className="signin__info">{isLogout ? (logoutProcessInfo !== "" ? logoutProcessInfo : "") : ""}</p>
+      <button
+        className="buttonLogout"
+        onClick={handleLogout}
+        // disabled={!(currentUser && typeof currentUser !== "string")}
+      >
+        Log out
+      </button>
       <FormBuilder
         updateUsers={updateUsers}
         config={configSignin}
