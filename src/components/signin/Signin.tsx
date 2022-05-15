@@ -71,15 +71,18 @@ const Signin: React.FC = (): JSX.Element => {
       <Link to="products" className="switcher">
         Products
       </Link>
-      <p className="signin__info">{isSignin ? (loginProcessInfo !== "" ? loginProcessInfo : "") : ""}</p>
-      <p className="signin__info">
+      <i className="signin__info">{isSignin ? (loginProcessInfo !== "" ? loginProcessInfo : "") : ""}</i>
+      <br />
+      <i className="signin__info">
         {currentUser === "wait"
           ? "please wait for server response..."
-          : currentUser
-          ? `You are login as ${currentUser}`
+          : currentUser && typeof currentUser !== "string"
+          ? `You are login as ${currentUser.username}`
           : `no current user`}
-      </p>
-      <p className="signin__info">{isLogout ? (logoutProcessInfo !== "" ? logoutProcessInfo : "") : ""}</p>
+      </i>
+      <br />
+      <i className="signin__info">{isLogout ? (logoutProcessInfo !== "" ? logoutProcessInfo : "") : ""}</i>
+      <br />
       <button
         className="buttonLogout"
         onClick={handleLogout}
