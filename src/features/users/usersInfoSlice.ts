@@ -9,6 +9,7 @@ interface InitialState {
   isSignupSubmit: boolean;
   usersFromStorage: object;
   isAuthed: boolean;
+  signinMessage: string;
   currentUser: User | undefined | string;
   logoutMessage: string;
 }
@@ -22,6 +23,7 @@ const initialState: InitialState = {
   isSignupSubmit: false,
   usersFromStorage: [],
   isAuthed: false,
+  signinMessage: "",
   currentUser: "wait",
   logoutMessage: "",
 };
@@ -36,8 +38,10 @@ export const getUsers = createAsyncThunk<Data>("users/getUsers", async () => {
   }) as Promise<Data>;
 });
 
-export const signin = createAsyncThunk<void, User>("signin/setSignin", async (currentUser: User) => {
-  return formAction.signin(currentUser);
+export const signin = createAsyncThunk<string, User>("signin/setSignin", async (currentUser: User) => {
+  return formAction.signin(currentUser).then((data: string) => {
+    return data; //payload - data
+  }) as Promise<string>;
 });
 
 export const getCurrentUser = createAsyncThunk<User>("currentUser/getCurrentUser", async () => {
@@ -88,11 +92,22 @@ export const usersInfoSlice = createSlice({
       console.log("rejected");
     });
 
+    builder.addCase(signin.fulfilled, (state, action) => {
+      state.signinMessage = action.payload;
+    });
+    builder.addCase(signin.pending, (state, _action) => {
+      state.signinMessage = "log in in progress...";
+      console.log("pending");
+    });
+    builder.addCase(signin.rejected, (_state, _action) => {
+      console.log("rejected");
+    });
+
     builder.addCase(logout.fulfilled, (state, action) => {
       state.logoutMessage = action.payload;
     });
     builder.addCase(logout.pending, (state, _action) => {
-      state.logoutMessage = "logout in progress...";
+      state.logoutMessage = "log out in progress...";
       console.log("pending");
     });
     builder.addCase(logout.rejected, (_state, _action) => {

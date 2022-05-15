@@ -22,6 +22,7 @@ export const formAction = {
   signin: (currentUser: User) => {
     return wait(2000).then(() => {
       localStorage.setItem("CurrentUser", JSON.stringify(currentUser));
+      return "you are successfully logged in!";
     });
   },
 

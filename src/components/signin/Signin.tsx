@@ -18,6 +18,7 @@ const Signin: React.FC = (): JSX.Element => {
   const usersFromStorage: any = useAppSelector((state) => state.users.usersFromStorage);
   const currentUser: User | undefined | string = useAppSelector((state) => state.users.currentUser);
   const logoutProcessInfo: string = useAppSelector((state) => state.users.logoutMessage);
+  const loginProcessInfo: string = useAppSelector((state) => state.users.signinMessage);
 
   const [values, setValues] = useState<User>({ username: "", password: "" });
 
@@ -60,12 +61,15 @@ const Signin: React.FC = (): JSX.Element => {
       <Link to="products" className="switcher">
         Products
       </Link>
+      <p>{loginProcessInfo !== "" ? loginProcessInfo : ""}</p>
       <p>
-        {logoutProcessInfo !== "" ? logoutProcessInfo : ""}
-        {/* {currentUser && typeof currentUser !== "string" ? `You are login as ${currentUser.username}` : "please wait..."} */}
-        {/* {currentUser === "wait" && `Current user: Please wait for server response`}
-        {!currentUser && `no current user`} */}
+        {currentUser === "wait"
+          ? "please wait for server response..."
+          : currentUser
+          ? `You are login as ${currentUser}`
+          : `no current user`}
       </p>
+      <p>{currentUser ? (logoutProcessInfo !== "" ? logoutProcessInfo : "") : ""}</p>
       <button onClick={handleLogout}>Log out</button>
       <FormBuilder
         updateUsers={updateUsers}
