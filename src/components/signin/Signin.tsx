@@ -83,11 +83,7 @@ const Signin: React.FC = (): JSX.Element => {
       <br />
       <i className="signin__info">{isLogout ? (logoutProcessInfo !== "" ? logoutProcessInfo : "") : ""}</i>
       <br />
-      <button
-        className="buttonLogout"
-        onClick={handleLogout}
-        // disabled={!(currentUser && typeof currentUser !== "string")}
-      >
+      <button className="buttonLogout" onClick={handleLogout} disabled={!currentUser}>
         Log out
       </button>
       <FormBuilder
