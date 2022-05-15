@@ -7,7 +7,7 @@ import "./signin.scss";
 import { User } from "../interfaces/User";
 import { configSignin } from "./config/configSignin";
 
-import { getCurrentUser, signin } from "../../features/users/usersInfoSlice";
+import { getCurrentUser, logout, signin } from "../../features/users/usersInfoSlice";
 
 import FormBuilder from "../utilityComponents/FormBuilder/FormBuilder";
 
@@ -20,15 +20,16 @@ const Signin: React.FC = (): JSX.Element => {
 
   const [values, setValues] = useState<User>({ username: "", password: "" });
 
+  useEffect(() => {
+    console.log(currentUser);
+  }, [currentUser]);
+
   const updateUsers = (__values: User): void => {
     setValues(__values);
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLInputElement>): void => {
     e.preventDefault();
-
-    console.log(usersFromStorage);
-    console.log(values);
 
     const checkUser = usersFromStorage?.find(
       (element: User) => element.username === values.username && element.password === values.password
@@ -42,6 +43,10 @@ const Signin: React.FC = (): JSX.Element => {
     }
   };
 
+  const handleLogout = (): void => {
+    dispatch(logout()).then(() => dispatch(getCurrentUser()));
+  };
+
   return (
     <main className="signin">
       <Link to="/signup" className="switcher">
@@ -50,8 +55,12 @@ const Signin: React.FC = (): JSX.Element => {
       <Link to="products" className="switcher">
         Products
       </Link>
-      <p>{currentUser && `You are login as ${currentUser}`}</p>
-      <button>Log out</button>
+      <p>
+        {currentUser && typeof currentUser !== "string" && `You are login as ${currentUser.username}`}
+        {currentUser === "wait" && `Current user: Please wait for server response`}
+        {!currentUser && `no current user`}
+      </p>
+      <button onClick={handleLogout}>Log out</button>
       <FormBuilder
         updateUsers={updateUsers}
         config={configSignin}

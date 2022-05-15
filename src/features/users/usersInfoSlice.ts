@@ -10,6 +10,7 @@ interface InitialState {
   usersFromStorage: object;
   isAuthed: boolean;
   currentUser: User | undefined | string;
+  logoutMessage: string;
 }
 
 interface Data {
@@ -22,6 +23,7 @@ const initialState: InitialState = {
   usersFromStorage: [],
   isAuthed: false,
   currentUser: "wait",
+  logoutMessage: "",
 };
 
 export const signup = createAsyncThunk<void, User[]>("signup/setSignup", async (users: User[]) => {
@@ -42,6 +44,12 @@ export const getCurrentUser = createAsyncThunk<User>("currentUser/getCurrentUser
   return formAction.checkLogin()?.then((data: User) => {
     return data; //payload - data
   }) as Promise<User>;
+});
+
+export const logout = createAsyncThunk<string>("logout/setLogout", async () => {
+  return formAction.logout()?.then((data: string) => {
+    return data; //payload - data
+  }) as Promise<string>;
 });
 
 export const usersInfoSlice = createSlice({
@@ -77,6 +85,16 @@ export const usersInfoSlice = createSlice({
       console.log("pending");
     });
     builder.addCase(getCurrentUser.rejected, (_state, _action) => {
+      console.log("rejected");
+    });
+
+    builder.addCase(logout.fulfilled, (state, action) => {
+      state.logoutMessage = action.payload;
+    });
+    builder.addCase(logout.pending, (_state, _action) => {
+      console.log("pending");
+    });
+    builder.addCase(logout.rejected, (_state, _action) => {
       console.log("rejected");
     });
   },
