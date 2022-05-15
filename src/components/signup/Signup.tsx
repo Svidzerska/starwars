@@ -4,9 +4,9 @@ import { useAppSelector, useAppDispatch } from "../../app/hooks";
 
 import "./signup.scss";
 
-import { getUsers, setUsers } from "../../features/usersInfoSlice";
-import { setSignupSubmit } from "../../features/usersInfoSlice";
-import { signup } from "../../features/usersInfoSlice";
+import { getUsers, setUsers } from "../../features/users/usersInfoSlice";
+import { setSignupSubmit } from "../../features/users/usersInfoSlice";
+import { signup } from "../../features/users/usersInfoSlice";
 
 import { configSignup } from "./config/configSignup";
 import { User } from "../../components/interfaces/User";

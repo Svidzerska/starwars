@@ -7,7 +7,7 @@ import "./signin.scss";
 import { User } from "../interfaces/User";
 import { configSignin } from "./config/configSignin";
 
-import { setAuthed } from "../../features/usersInfoSlice";
+import { getCurrentUser, signin } from "../../features/users/usersInfoSlice";
 
 import FormBuilder from "../utilityComponents/FormBuilder/FormBuilder";
 
@@ -16,8 +16,9 @@ const Signin: React.FC = (): JSX.Element => {
   const dispatch = useAppDispatch();
 
   const usersFromStorage: any = useAppSelector((state) => state.users.usersFromStorage);
+  const currentUser: User | undefined | string = useAppSelector((state) => state.users.currentUser);
 
-  const [values, setValues] = useState<User>({ username: "", password: "", confirmPassword: "" });
+  const [values, setValues] = useState<User>({ username: "", password: "" });
 
   const updateUsers = (__values: User): void => {
     setValues(__values);
@@ -29,12 +30,13 @@ const Signin: React.FC = (): JSX.Element => {
     console.log(usersFromStorage);
     console.log(values);
 
-    const checkLogin = usersFromStorage.find(
+    const checkUser = usersFromStorage?.find(
       (element: User) => element.username === values.username && element.password === values.password
     );
-    if (checkLogin) {
-      dispatch(setAuthed(true));
-      navigate("/products");
+    if (checkUser) {
+      dispatch(signin(values))
+        .then(() => dispatch(getCurrentUser()))
+        .then(() => navigate("/products"));
     } else {
       navigate("/signup");
     }
@@ -45,6 +47,11 @@ const Signin: React.FC = (): JSX.Element => {
       <Link to="/signup" className="switcher">
         Sign up
       </Link>
+      <Link to="products" className="switcher">
+        Products
+      </Link>
+      <p>{currentUser && `You are login as ${currentUser}`}</p>
+      <button>Log out</button>
       <FormBuilder
         updateUsers={updateUsers}
         config={configSignin}

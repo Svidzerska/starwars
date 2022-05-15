@@ -1,6 +1,6 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 
-import usersInfoReducer from "../features/usersInfoSlice";
+import usersInfoReducer from "../features/users/usersInfoSlice";
 import productsReducer from "../features/products/productsSlice";
 
 export const store = configureStore({

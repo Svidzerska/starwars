@@ -1,0 +1,18 @@
+.products {
+  display: flex;
+  flex-direction: row;
+  background-color: rgb(17, 17, 131);
+  justify-content: space-between;
+
+  .products__card {
+    border: 3px solid white;
+    list-style-type: none;
+
+    .card__count {
+      font-size: 30px;
+      font-weight: 700;
+      color: white;
+      background-color: rgb(17, 17, 131);
+    }
+  }
+}

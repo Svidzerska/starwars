@@ -4,6 +4,7 @@ import { products } from "../../api/products";
 
 interface InitialState {
   people: object;
+  starships: object;
 }
 
 interface Data {
@@ -12,10 +13,17 @@ interface Data {
 
 const initialState: InitialState = {
   people: {},
+  starships: {},
 };
 
 export const getPeople = createAsyncThunk<Data>("people/getPeople", async () => {
   return products.getPeople()?.then((data: Data) => {
+    return data; //payload - data
+  }) as Promise<Data>;
+});
+
+export const getStarships = createAsyncThunk<Data>("starships/getStarships", async () => {
+  return products.getStarships()?.then((data: Data) => {
     return data; //payload - data
   }) as Promise<Data>;
 });
@@ -36,6 +44,16 @@ export const productsSlice = createSlice({
       console.log("pending");
     });
     builder.addCase(getPeople.rejected, (_state, _action) => {
+      console.log("rejected");
+    });
+
+    builder.addCase(getStarships.fulfilled, (state, action) => {
+      state.starships = action.payload;
+    });
+    builder.addCase(getStarships.pending, (_state, _action) => {
+      console.log("pending");
+    });
+    builder.addCase(getStarships.rejected, (_state, _action) => {
       console.log("rejected");
     });
   },

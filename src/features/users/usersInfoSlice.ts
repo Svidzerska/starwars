@@ -1,14 +1,15 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 
-import { User } from "../components/interfaces/User";
+import { User } from "../../components/interfaces/User";
 
-import { formAction } from "../api/formActions";
+import { formAction } from "../../api/formActions";
 
 interface InitialState {
   users: User[];
   isSignupSubmit: boolean;
   usersFromStorage: object;
   isAuthed: boolean;
+  currentUser: User | undefined | string;
 }
 
 interface Data {
@@ -20,6 +21,7 @@ const initialState: InitialState = {
   isSignupSubmit: false,
   usersFromStorage: [],
   isAuthed: false,
+  currentUser: "wait",
 };
 
 export const signup = createAsyncThunk<void, User[]>("signup/setSignup", async (users: User[]) => {
@@ -30,6 +32,16 @@ export const getUsers = createAsyncThunk<Data>("users/getUsers", async () => {
   return formAction.getUsers()?.then((data: Data) => {
     return data; //payload - data
   }) as Promise<Data>;
+});
+
+export const signin = createAsyncThunk<void, User>("signin/setSignin", async (currentUser: User) => {
+  return formAction.signin(currentUser);
+});
+
+export const getCurrentUser = createAsyncThunk<User>("currentUser/getCurrentUser", async () => {
+  return formAction.checkLogin()?.then((data: User) => {
+    return data; //payload - data
+  }) as Promise<User>;
 });
 
 export const usersInfoSlice = createSlice({
@@ -54,6 +66,17 @@ export const usersInfoSlice = createSlice({
       console.log("pending");
     });
     builder.addCase(getUsers.rejected, (_state, _action) => {
+      console.log("rejected");
+    });
+
+    builder.addCase(getCurrentUser.fulfilled, (state, action) => {
+      state.currentUser = action.payload;
+    });
+    builder.addCase(getCurrentUser.pending, (state, _action) => {
+      state.currentUser = "wait";
+      console.log("pending");
+    });
+    builder.addCase(getCurrentUser.rejected, (_state, _action) => {
       console.log("rejected");
     });
   },

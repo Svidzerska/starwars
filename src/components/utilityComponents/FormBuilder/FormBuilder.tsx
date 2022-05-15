@@ -4,7 +4,7 @@ import { useAppSelector, useAppDispatch } from "../../../app/hooks";
 
 import "./formBuilder.scss";
 
-import { getUsers } from "../../../features/usersInfoSlice";
+import { getUsers } from "../../../features/users/usersInfoSlice";
 
 import { Config } from "../../interfaces/Config";
 import { ValidationResult } from "../../interfaces/ValidationResult";
@@ -67,7 +67,6 @@ const FormBuilder: React.FC<Props> = ({
 
   const listOfFields: JSX.Element[] = config.map((field: Config) => {
     const name = field.fieldName;
-    console.log(values[name]);
 
     const validationResult: ValidationResult[] = field.validationMethods.map((rule) => {
       return values[name] && rule(values[name], password);

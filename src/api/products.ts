@@ -2,12 +2,12 @@ export const products = {
   getPeople: () => {
     return try_catch("https://swapi.dev/api/people");
   },
-  getStarShips: () => {
+  getStarships: () => {
     return try_catch("https://swapi.dev/api/starships");
   },
 };
 
-async function try_catch(url: string) {
+const try_catch = async (url: string) => {
   try {
     const result = await fetch(url);
     const json = await result.json();
@@ -16,4 +16,4 @@ async function try_catch(url: string) {
     console.log(err);
     return err;
   }
-}
+};
