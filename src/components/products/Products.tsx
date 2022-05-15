@@ -5,6 +5,8 @@ import { useAppSelector, useAppDispatch } from "../../app/hooks";
 
 import "./products.scss";
 
+import { Entities } from "../interfaces/Entities";
+
 import { getPeople, getStarships } from "../../features/products/productsSlice";
 
 const Products: React.FC = (): JSX.Element => {
@@ -12,8 +14,8 @@ const Products: React.FC = (): JSX.Element => {
 
   const dispatch = useAppDispatch();
 
-  const people: any = useAppSelector((state) => state.products.people);
-  const starships: any = useAppSelector((state) => state.products.starships);
+  const people: Entities = useAppSelector((state) => state.products.people);
+  const starships: Entities = useAppSelector((state) => state.products.starships);
 
   useEffect(() => {
     dispatch(getPeople());

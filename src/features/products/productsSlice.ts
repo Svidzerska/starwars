@@ -1,14 +1,11 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 
 import { products } from "../../api/products";
+import { Entities } from "../../components/interfaces/Entities";
 
 interface InitialState {
-  people: object;
-  starships: object;
-}
-
-interface Data {
-  data: object;
+  people: Entities;
+  starships: Entities;
 }
 
 const initialState: InitialState = {
@@ -16,16 +13,16 @@ const initialState: InitialState = {
   starships: {},
 };
 
-export const getPeople = createAsyncThunk<Data>("people/getPeople", async () => {
-  return products.getPeople()?.then((data: Data) => {
+export const getPeople = createAsyncThunk<Entities>("people/getPeople", async () => {
+  return products.getPeople()?.then((data: Entities) => {
     return data; //payload - data
-  }) as Promise<Data>;
+  }) as Promise<Entities>;
 });
 
-export const getStarships = createAsyncThunk<Data>("starships/getStarships", async () => {
-  return products.getStarships()?.then((data: Data) => {
+export const getStarships = createAsyncThunk<Entities>("starships/getStarships", async () => {
+  return products.getStarships()?.then((data: Entities) => {
     return data; //payload - data
-  }) as Promise<Data>;
+  }) as Promise<Entities>;
 });
 
 export const productsSlice = createSlice({
