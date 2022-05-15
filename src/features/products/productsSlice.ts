@@ -40,7 +40,8 @@ export const productsSlice = createSlice({
     builder.addCase(getPeople.fulfilled, (state, action) => {
       state.people = action.payload;
     });
-    builder.addCase(getPeople.pending, (_state, _action) => {
+    builder.addCase(getPeople.pending, (state, _action) => {
+      state.people = { count: "Loarding..." };
       console.log("pending");
     });
     builder.addCase(getPeople.rejected, (_state, _action) => {
@@ -50,7 +51,8 @@ export const productsSlice = createSlice({
     builder.addCase(getStarships.fulfilled, (state, action) => {
       state.starships = action.payload;
     });
-    builder.addCase(getStarships.pending, (_state, _action) => {
+    builder.addCase(getStarships.pending, (state, _action) => {
+      state.starships = { count: "Loarding..." };
       console.log("pending");
     });
     builder.addCase(getStarships.rejected, (_state, _action) => {
