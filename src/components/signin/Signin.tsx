@@ -17,12 +17,17 @@ const Signin: React.FC = (): JSX.Element => {
 
   const usersFromStorage: any = useAppSelector((state) => state.users.usersFromStorage);
   const currentUser: User | undefined | string = useAppSelector((state) => state.users.currentUser);
+  const logoutProcessInfo: string = useAppSelector((state) => state.users.logoutMessage);
 
   const [values, setValues] = useState<User>({ username: "", password: "" });
 
   useEffect(() => {
     console.log(currentUser);
   }, [currentUser]);
+
+  useEffect(() => {
+    console.log(logoutProcessInfo);
+  }, [logoutProcessInfo]);
 
   const updateUsers = (__values: User): void => {
     setValues(__values);
@@ -56,9 +61,10 @@ const Signin: React.FC = (): JSX.Element => {
         Products
       </Link>
       <p>
-        {currentUser && typeof currentUser !== "string" && `You are login as ${currentUser.username}`}
-        {currentUser === "wait" && `Current user: Please wait for server response`}
-        {!currentUser && `no current user`}
+        {logoutProcessInfo !== "" ? logoutProcessInfo : ""}
+        {/* {currentUser && typeof currentUser !== "string" ? `You are login as ${currentUser.username}` : "please wait..."} */}
+        {/* {currentUser === "wait" && `Current user: Please wait for server response`}
+        {!currentUser && `no current user`} */}
       </p>
       <button onClick={handleLogout}>Log out</button>
       <FormBuilder

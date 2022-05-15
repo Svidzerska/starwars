@@ -91,7 +91,8 @@ export const usersInfoSlice = createSlice({
     builder.addCase(logout.fulfilled, (state, action) => {
       state.logoutMessage = action.payload;
     });
-    builder.addCase(logout.pending, (_state, _action) => {
+    builder.addCase(logout.pending, (state, _action) => {
+      state.logoutMessage = "logout in progress...";
       console.log("pending");
     });
     builder.addCase(logout.rejected, (_state, _action) => {
