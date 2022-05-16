@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useAppSelector } from "../../../app/hooks";
 
 import "./card.scss";
 
@@ -9,6 +10,8 @@ interface Props {
 }
 
 const CardRender: React.FC<Props> = ({ entities }): JSX.Element => {
+  const isBlockView: boolean = useAppSelector((state) => state.products.isBlockViewServer);
+
   const [peculiarities, setPeculiarities] = useState<string[]>([]);
 
   useEffect(() => {
@@ -23,8 +26,8 @@ const CardRender: React.FC<Props> = ({ entities }): JSX.Element => {
       while (index <= 7 && index >= 1) {
         return (
           <p key={element}>
-            <span>{element}:</span>
-            <span>{entity[element]}</span>
+            <span className="propertyName">{element}: </span>
+            <span className="propertyValue">{entity[element]}</span>
             <br />
           </p>
         );
@@ -34,15 +37,17 @@ const CardRender: React.FC<Props> = ({ entities }): JSX.Element => {
     return (
       <li key={entity.name}>
         <button>
-          <img src="" alt="" />
-          <h1>{entity.name}</h1>
-          {properties}
+          <p>
+            <img src="" alt="" />
+            <h1>{entity.name}</h1>
+          </p>
+          <p className="properties">{isBlockView ? null : properties}</p>
         </button>
       </li>
     );
   });
 
-  return <main>{<ul className="cards">{cards}</ul>}</main>;
+  return <main>{<ul className={`cards ${!isBlockView && "stringify"}`}>{cards}</ul>}</main>;
 };
 
 export default CardRender;

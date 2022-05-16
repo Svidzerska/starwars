@@ -1,9 +1,25 @@
+import { wait } from "../utilities/wait";
+
 export const products = {
   getPeople: () => {
     return try_catch("https://swapi.dev/api/people");
   },
   getStarships: () => {
     return try_catch("https://swapi.dev/api/starships");
+  },
+  setView: (isBlockView: boolean) => {
+    return wait(2000).then(() => {
+      localStorage.setItem("View", JSON.stringify(isBlockView));
+    });
+  },
+  getView: () => {
+    return wait(2000).then(() => {
+      const viewFromStorage = localStorage.getItem("View");
+      if (viewFromStorage) {
+        const viewFromStorageParse = JSON.parse(viewFromStorage);
+        return viewFromStorageParse;
+      }
+    });
   },
 };
 

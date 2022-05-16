@@ -2,4 +2,25 @@ header {
   display: flex;
   padding: 10px;
   justify-content: flex-end;
+  background-color: rgba(255, 119, 0, 0.518);
+
+  button {
+    width: 100px;
+    height: 40px;
+    background-color: rgb(17, 17, 131);
+    color: rgb(255, 119, 0);
+    cursor: pointer;
+    border: none;
+    opacity: 70%;
+    font-size: 24px;
+  }
+
+  button:hover {
+    opacity: 100%;
+  }
+
+  .swich-on {
+    background-color: rgb(255, 119, 0);
+    color: rgb(17, 17, 131);
+  }
 }
