@@ -19,6 +19,11 @@ header {
     opacity: 100%;
   }
 
+  button:disabled {
+    opacity: 20%;
+    cursor: default;
+  }
+
   .swich-on {
     background-color: rgb(255, 119, 0);
     color: rgb(17, 17, 131);

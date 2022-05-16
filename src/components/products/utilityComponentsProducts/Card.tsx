@@ -47,7 +47,7 @@ const CardRender: React.FC<Props> = ({ entities }): JSX.Element => {
       }
     });
 
-    const fotoRandom = Math.round(Math.random() * 10);
+    const fotoRandom = Math.floor(Math.random() * 10);
 
     return (
       <li key={entity.name}>
@@ -56,13 +56,26 @@ const CardRender: React.FC<Props> = ({ entities }): JSX.Element => {
             <img src={fotoArray[fotoRandom]} alt="" />
             <h1>{entity.name}</h1>
           </div>
-          <div className="properties">{isBlockView ? null : properties}</div>
+          {isBlockView ? null : <div className="properties">{properties}</div>}
         </button>
       </li>
     );
   });
 
-  return <main>{<ul className={`cards ${!isBlockView && "stringify"}`}>{cards}</ul>}</main>;
+  return (
+    <main>
+      {isBlockView ? (
+        <section className="row">
+          <ul className="column">{cards?.filter((_item, index) => index % 2 === 0 && (index / 2) % 2 === 0)}</ul>
+          <ul className="column">{cards?.filter((_item, index) => index % 2 !== 0 && ((index - 1) / 2) % 2 === 0)}</ul>
+          <ul className="column">{cards?.filter((_item, index) => index % 2 === 0 && (index / 2) % 2 !== 0)}</ul>
+          <ul className="column">{cards?.filter((_item, index) => index % 2 !== 0 && ((index - 1) / 2) % 2 !== 0)}</ul>
+        </section>
+      ) : (
+        <ul className={"cards_stringify"}>{cards}</ul>
+      )}
+    </main>
+  );
 };
 
 export default CardRender;

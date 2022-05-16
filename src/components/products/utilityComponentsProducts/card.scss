@@ -1,38 +1,67 @@
 main {
   min-height: 100vh;
   background-image: linear-gradient(rgba(255, 119, 0, 0.518), rgba(17, 17, 131, 0.482));
-  .cards {
-    list-style-type: none;
-    margin: 0;
-    padding: 20px;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
 
-    li {
-      flex-basis: 20%;
-      button {
-        .name {
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+
+    .column {
+      flex: 25%;
+      max-width: 25%;
+      list-style-type: none;
+      padding-left: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      li {
+        margin: 20px;
+        button {
+          cursor: pointer;
+          border-radius: 30px;
+          background-color: aliceblue;
+          padding: 5px;
+
           img {
             width: 100%;
+            border-radius: 30px;
           }
+        }
+
+        button:hover {
+          background-color: rgba(17, 17, 131);
+          color: rgba(255, 119, 0);
         }
       }
     }
   }
 
-  .cards.stringify {
+  .cards_stringify {
+    display: flex;
     flex-direction: column;
+    list-style-type: none;
+    margin: 0;
+    padding: 10px;
 
     li {
+      max-width: 600px;
       width: 100%;
+      margin: 10px;
+      margin-left: auto;
+      margin-right: auto;
+
       button {
         width: 100%;
         display: flex;
         flex-direction: row;
         justify-content: flex-start;
+        align-items: center;
         padding: 10px;
+        cursor: pointer;
 
         .name {
           width: 40%;
@@ -45,7 +74,7 @@ main {
           display: flex;
           flex-direction: column;
           align-items: flex-start;
-          margin-left: 20px;
+          margin-left: 50px;
 
           .propertyName {
             font-size: 18px;

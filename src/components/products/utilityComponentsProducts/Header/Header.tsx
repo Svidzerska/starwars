@@ -28,10 +28,10 @@ const Header: React.FC = (): JSX.Element => {
 
   return (
     <header>
-      <button className={isBlockView ? "swich-on" : ""} onClick={onBlocks}>
+      <button className={isBlockView ? "swich-on" : ""} onClick={onBlocks} disabled={isBlockView}>
         Blocks
       </button>
-      <button className={!isBlockView ? "swich-on" : ""} onClick={onStrings}>
+      <button className={!isBlockView ? "swich-on" : ""} onClick={onStrings} disabled={!isBlockView}>
         Strings
       </button>
     </header>
