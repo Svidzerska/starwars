@@ -1,14 +1,16 @@
+@import "../../../../utilities/variables.scss";
+
 header {
   display: flex;
   padding: 10px;
   justify-content: flex-end;
-  background-color: rgba(255, 119, 0, 0.518);
+  background-color: $verylightorange;
 
   button {
     width: 100px;
     height: 40px;
-    background-color: rgb(17, 17, 131);
-    color: rgb(255, 119, 0);
+    background-color: $heavyblue;
+    color: $orange;
     cursor: pointer;
     border: none;
     opacity: 70%;
@@ -25,7 +27,7 @@ header {
   }
 
   .swich-on {
-    background-color: rgb(255, 119, 0);
-    color: rgb(17, 17, 131);
+    background-color: $orange;
+    color: $heavyblue;
   }
 }

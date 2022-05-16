@@ -1,18 +1,20 @@
+@import "../../utilities/variables.scss";
+
 .signin {
-  background-color: rgb(255, 140, 74);
+  background-color: $orangewhite;
   text-align: center;
   height: 100vh;
   padding: 50px;
   .switcher {
     display: block;
     padding: 10px;
-    color: rgb(17, 17, 131);
+    color: $heavyblue;
     text-decoration: none;
     cursor: pointer;
   }
 
   .signin__info {
-    color: rgb(94, 26, 26);
+    color: $darkred;
   }
 
   .buttonLogout {

@@ -63,7 +63,7 @@ const CardRender: React.FC<Props> = ({ entities }): JSX.Element => {
   });
 
   return (
-    <main>
+    <main className="cards">
       {isBlockView ? (
         <section className="row">
           <ul className="column">{cards?.filter((_item, index) => index % 2 === 0 && (index / 2) % 2 === 0)}</ul>
