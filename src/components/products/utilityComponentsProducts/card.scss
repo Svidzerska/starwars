@@ -56,37 +56,42 @@
       margin-left: auto;
       margin-right: auto;
 
-      button {
-        width: 100%;
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        align-items: center;
-        padding: 10px;
-        cursor: pointer;
+      a {
+        display: block;
+        text-decoration: none;
 
-        .name {
-          width: 40%;
-          img {
-            width: 100%;
-          }
-        }
-
-        .properties {
+        button {
+          width: 100%;
           display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-          margin-left: 50px;
+          flex-direction: row;
+          justify-content: flex-start;
+          align-items: center;
+          padding: 10px;
+          cursor: pointer;
 
-          .propertyName {
-            font-size: 18px;
-            font-weight: 700;
-            color: $heavyblue;
+          .name {
+            width: 40%;
+            img {
+              width: 100%;
+            }
           }
 
-          .propertyValue {
-            font-size: 18px;
-            color: $orange;
+          .properties {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            margin-left: 50px;
+
+            .propertyName {
+              font-size: 18px;
+              font-weight: 700;
+              color: $heavyblue;
+            }
+
+            .propertyValue {
+              font-size: 18px;
+              color: $orange;
+            }
           }
         }
       }

@@ -1,5 +1,22 @@
 @import "../../../utilities/variables.scss";
 
+@keyframes entityColorChange {
+  0% {
+    background-color: $orange;
+    color: $heavyblue;
+  }
+  25% {
+    background-color: $orangegray;
+  }
+  50% {
+    background-color: $heavybluegray;
+  }
+  100% {
+    background-color: $heavyblue;
+    color: $orange;
+  }
+}
+
 .entity_header {
   display: flex;
   justify-content: space-between;
@@ -30,12 +47,46 @@
   }
 }
 
-main {
-  text-align: center;
+.entity_main {
+  min-height: 100vh;
+  animation-name: entityColorChange;
+  animation-duration: 5s;
+  animation-timing-function: linear;
+  animation-fill-mode: both;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-bottom: 20px;
+
+  img {
+    width: 25%;
+    margin: 20px auto 0 auto;
+  }
+
+  h1 {
+    text-align: center;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0;
+    padding-top: 50px;
+  }
 
   section {
-    p.category_name {
-      font-size: 20px;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+
+    h2 {
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    .propertyName {
+      font-size: 18px;
+      font-weight: 900;
     }
   }
 }
