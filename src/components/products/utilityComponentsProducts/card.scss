@@ -8,10 +8,17 @@ main {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: flex-start;
+    justify-content: space-evenly;
 
     li {
-      width: auto;
+      flex-basis: 20%;
+      button {
+        .name {
+          img {
+            width: 100%;
+          }
+        }
+      }
     }
   }
 
@@ -27,6 +34,13 @@ main {
         justify-content: flex-start;
         padding: 10px;
 
+        .name {
+          width: 40%;
+          img {
+            width: 100%;
+          }
+        }
+
         .properties {
           display: flex;
           flex-direction: column;
@@ -35,6 +49,7 @@ main {
 
           .propertyName {
             font-size: 18px;
+            font-weight: 700;
             color: rgba(17, 17, 131);
           }
 
