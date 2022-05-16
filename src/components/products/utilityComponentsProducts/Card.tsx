@@ -34,6 +34,10 @@ const CardRender: React.FC<Props> = ({ entities }): JSX.Element => {
 
   const fotoArray = [foto0, foto1, foto2, foto3, foto4, foto5, foto6, foto7, foto8, foto9];
 
+  const showDetails = (url: string): void => {
+    console.log(url);
+  };
+
   const cards: JSX.Element[] | undefined = entities.results?.map((entity: any) => {
     const properties: (JSX.Element | undefined)[] = peculiarities.map((element, index) => {
       while (index <= 7 && index >= 1) {
@@ -51,7 +55,7 @@ const CardRender: React.FC<Props> = ({ entities }): JSX.Element => {
 
     return (
       <li key={entity.name}>
-        <button>
+        <button onClick={(e) => showDetails(entity.url)}>
           <div className="name">
             <img src={fotoArray[fotoRandom]} alt="" />
             <h1>{entity.name}</h1>

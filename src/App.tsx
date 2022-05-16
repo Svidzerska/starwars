@@ -33,8 +33,14 @@ const App: React.FC = (): JSX.Element => {
         <Route path="/signup" element={<Signup />} />
         <Route path="/products" element={<PrivateRoute isAuthed={currentUser} component={<Outlet />} />}>
           <Route index element={<Products />} />
-          <Route path="people" element={<People />} />
-          <Route path="starships" element={<Starships />} />
+          <Route path="people" element={<Outlet />}>
+            <Route index element={<People />} />
+            <Route path=":peopleId" element={<p>peopleId</p>} />
+          </Route>
+          <Route path="starships" element={<Outlet />}>
+            <Route index element={<Starships />} />
+            <Route path=":starshipsId" element={<p>starshipsId</p>} />
+          </Route>
         </Route>
       </Routes>
     </Router>
