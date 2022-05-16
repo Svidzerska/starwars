@@ -39,7 +39,7 @@ const CardRender: React.FC<Props> = ({ entities }): JSX.Element => {
 
   const cards: JSX.Element[] | undefined = entities.results?.map((entity: any) => {
     const properties: (JSX.Element | undefined)[] = peculiarities.map((element, index) => {
-      while (index <= 7 && index >= 1) {
+      while (index <= 4 && index >= 1) {
         return (
           <p key={element}>
             <span className="propertyName">{element}: </span>

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
+import "./showDetails.scss";
+
 import { useAppSelector, useAppDispatch } from "../../../app/hooks";
 
 import { getEntity } from "../../../features/products/productsSlice";
@@ -38,13 +40,39 @@ const ShowDetails: React.FC<Props> = ({ parentBlock }): JSX.Element => {
 
   return (
     <>
-      <header>
+      <header className="entity_header">
         <Link to={`/products/${parentBlock}`}>Back to {parentBlock}</Link>
         <button></button>
       </header>
-      <main>
-        <p>{characteristics}</p>
-      </main>
+      {parentBlock === "starships" ? (
+        <main>
+          <h1>{entity.name}</h1>
+          <section>
+            <h2 className="category_name">{"What is it?"}</h2>
+            {characteristics.filter((_item, index) => index >= 1 && index <= 3)}
+          </section>
+          <section>
+            <h2 className="category_name">{"Physical characteristics"}</h2>
+            {characteristics.filter((_item, index) => index >= 4 && index <= 11)}
+          </section>
+          <section>
+            <h2 className="category_name">{"Class of starships"}</h2>
+            {characteristics.filter((_item, index) => index === 12)}
+          </section>
+        </main>
+      ) : (
+        <main>
+          <h1>{entity.name}</h1>
+          <section>
+            <h2 className="category_name">{"Physical details"}</h2>
+            {characteristics.filter((_item, index) => index >= 1 && index <= 5)}
+          </section>
+          <section>
+            <h2 className="category_name">{"Who is it?"}</h2>
+            {characteristics.filter((_item, index) => index >= 6 && index <= 7)}
+          </section>
+        </main>
+      )}
     </>
   );
 };
