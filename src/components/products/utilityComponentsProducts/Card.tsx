@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useAppSelector } from "../../../app/hooks";
+import { Link } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 
 import foto1 from "../../../images/people/1.jpg";
 import foto2 from "../../../images/people/2.jpg";
@@ -21,6 +22,8 @@ interface Props {
 }
 
 const CardRender: React.FC<Props> = ({ entities }): JSX.Element => {
+  const dispatch = useAppDispatch();
+
   const isBlockView: boolean = useAppSelector((state) => state.products.isBlockViewServer);
 
   const [peculiarities, setPeculiarities] = useState<string[]>([]);
@@ -33,10 +36,6 @@ const CardRender: React.FC<Props> = ({ entities }): JSX.Element => {
   }, [entities]);
 
   const fotoArray = [foto0, foto1, foto2, foto3, foto4, foto5, foto6, foto7, foto8, foto9];
-
-  const showDetails = (url: string): void => {
-    console.log(url);
-  };
 
   const cards: JSX.Element[] | undefined = entities.results?.map((entity: any) => {
     const properties: (JSX.Element | undefined)[] = peculiarities.map((element, index) => {
@@ -53,15 +52,19 @@ const CardRender: React.FC<Props> = ({ entities }): JSX.Element => {
 
     const fotoRandom = Math.floor(Math.random() * 10);
 
+    const path = entity.url.match(/\d+/)[0];
+
     return (
       <li key={entity.name}>
-        <button onClick={(e) => showDetails(entity.url)}>
-          <div className="name">
-            <img src={fotoArray[fotoRandom]} alt="" />
-            <h1>{entity.name}</h1>
-          </div>
-          {isBlockView ? null : <div className="properties">{properties}</div>}
-        </button>
+        <Link to={path}>
+          <button>
+            <div className="name">
+              <img src={fotoArray[fotoRandom]} alt="" />
+              <h1>{entity.name}</h1>
+            </div>
+            {isBlockView ? null : <div className="properties">{properties}</div>}
+          </button>
+        </Link>
       </li>
     );
   });

@@ -15,11 +15,11 @@ import Signup from "./components/signup/Signup";
 import Products from "./components/products/Products";
 import People from "./components/products/people/People";
 import Starships from "./components/products/starships/Starships";
+import ShowDetails from "./components/products/utilityDetails/ShowDetails";
 
 const App: React.FC = (): JSX.Element => {
   const dispatch = useAppDispatch();
 
-  // const isAuthed: boolean = useAppSelector((state) => state.users.isAuthed);
   const currentUser: User | undefined | string = useAppSelector((state) => state.users.currentUser);
 
   useEffect(() => {
@@ -35,11 +35,11 @@ const App: React.FC = (): JSX.Element => {
           <Route index element={<Products />} />
           <Route path="people" element={<Outlet />}>
             <Route index element={<People />} />
-            <Route path=":peopleId" element={<p>peopleId</p>} />
+            <Route path=":entityId" element={<ShowDetails parentBlock={"people"} />} />
           </Route>
           <Route path="starships" element={<Outlet />}>
             <Route index element={<Starships />} />
-            <Route path=":starshipsId" element={<p>starshipsId</p>} />
+            <Route path=":entityId" element={<ShowDetails parentBlock={"starships"} />} />
           </Route>
         </Route>
       </Routes>

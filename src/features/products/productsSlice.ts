@@ -6,12 +6,14 @@ import { Entities } from "../../components/interfaces/Entities";
 interface InitialState {
   people: Entities;
   starships: Entities;
+  entity: any;
   isBlockViewServer: boolean;
 }
 
 const initialState: InitialState = {
   people: {},
   starships: {},
+  entity: {},
   isBlockViewServer: true,
 };
 
@@ -25,6 +27,12 @@ export const getStarships = createAsyncThunk<Entities>("starships/getStarships",
   return products.getStarships()?.then((data: Entities) => {
     return data; //payload - data
   }) as Promise<Entities>;
+});
+
+export const getEntity = createAsyncThunk<any, string>("entity/getEntity", async (url: string) => {
+  return products.getEntity(url)?.then((data: any) => {
+    return data; //payload - data
+  }) as Promise<any>;
 });
 
 export const setView = createAsyncThunk<void, boolean>("view/setView", async (isBlockView: boolean) => {
@@ -41,10 +49,11 @@ export const productsSlice = createSlice({
   name: "users",
   initialState,
   reducers: {
-    // setBlockView: (state: InitialState, action: PayloadAction<boolean>) => {
-    //   state.isBlockView = action.payload;
+    // setUrlDetails: (state: InitialState, action: PayloadAction<string>) => {
+    //   state.urlDetails = action.payload;
     // },
   },
+
   extraReducers: (builder) => {
     builder.addCase(getPeople.fulfilled, (state, action) => {
       state.people = action.payload;
@@ -65,6 +74,16 @@ export const productsSlice = createSlice({
       console.log("pending");
     });
     builder.addCase(getStarships.rejected, (_state, _action) => {
+      console.log("rejected");
+    });
+
+    builder.addCase(getEntity.fulfilled, (state, action) => {
+      state.entity = action.payload;
+    });
+    builder.addCase(getEntity.pending, (_state, _action) => {
+      console.log("pending");
+    });
+    builder.addCase(getEntity.rejected, (_state, _action) => {
       console.log("rejected");
     });
 

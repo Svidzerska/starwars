@@ -7,6 +7,9 @@ export const products = {
   getStarships: () => {
     return try_catch("https://swapi.dev/api/starships");
   },
+  getEntity: (url: string) => {
+    return try_catch(url);
+  },
   setView: (isBlockView: boolean) => {
     return wait(2000).then(() => {
       localStorage.setItem("View", JSON.stringify(isBlockView));
