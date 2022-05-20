@@ -4,9 +4,7 @@ import { useAppSelector, useAppDispatch } from "../../app/hooks";
 
 import "./signup.scss";
 
-import { getUsers, setUsers } from "../../features/users/usersInfoSlice";
-import { setSignupSubmit } from "../../features/users/usersInfoSlice";
-import { signup } from "../../features/users/usersInfoSlice";
+import { setUsers, setSignupSubmit, setSubmitSuccess } from "../../features/users/usersInfoSlice";
 
 import { configSignup } from "./config/configSignup";
 import { User } from "../../components/interfaces/User";
@@ -18,17 +16,25 @@ const Signup: React.FC = (): JSX.Element => {
 
   const users: User[] = useAppSelector((state) => state.users.users);
   const isSignupSubmit: boolean = useAppSelector((state) => state.users.isSignupSubmit);
-  const usersFromStorage: any = useAppSelector((state) => state.users.usersFromStorage);
+  const isSubmitSuccess: boolean = useAppSelector((state) => state.users.isSubmitSuccess);
 
   const [values, setValues] = useState<User>({ username: "", password: "", confirmPassword: "" });
   const [isExistUser, setExistUser] = useState<boolean>(false);
 
   useEffect(() => {
-    isSignupSubmit && dispatch(getUsers()).then(() => dispatch(setSignupSubmit(false)));
+    dispatch(setSubmitSuccess(false));
+  }, []);
+
+  useEffect(() => {
+    isSignupSubmit && dispatch(setSignupSubmit(false));
   }, [isSignupSubmit]);
 
   useEffect(() => {
-    users.length !== 0 && dispatch(signup(users)).then(() => dispatch(setSignupSubmit(true)));
+    if (users.length !== 0) {
+      localStorage.setItem("Users", JSON.stringify(users));
+      dispatch(setSignupSubmit(true));
+      dispatch(setSubmitSuccess(true));
+    }
   }, [users]);
 
   const updateUsers = (__values: User): void => {
@@ -44,7 +50,15 @@ const Signup: React.FC = (): JSX.Element => {
     if (repeatUser) {
       setExistUser(true);
     } else {
-      usersFromStorage ? dispatch(setUsers([...usersFromStorage, values])) : dispatch(setUsers([values]));
+      const usersFromStorage = localStorage.getItem("Users");
+
+      if (usersFromStorage) {
+        const usersFromStorageParse = JSON.parse(usersFromStorage);
+        dispatch(setUsers([...usersFromStorageParse, values]));
+      } else {
+        dispatch(setUsers([values]));
+      }
+
       setExistUser(false);
     }
   };
@@ -55,6 +69,7 @@ const Signup: React.FC = (): JSX.Element => {
         Sign in
       </Link>
       <i className="signup__warning">{isExistUser && "the user already exists, please sign in"}</i>
+      <i className="signup__warning">{isSubmitSuccess && "You are successfully signed up, please sign in"}</i>
       <FormBuilder
         updateUsers={updateUsers}
         config={configSignup}

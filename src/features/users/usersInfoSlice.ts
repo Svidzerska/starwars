@@ -1,60 +1,20 @@
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { User } from "../../components/interfaces/User";
 
-import { formAction } from "../../api/formActions";
-
 interface InitialState {
   users: User[];
+  currentUser: User | null;
   isSignupSubmit: boolean;
-  usersFromStorage: object;
-  isAuthed: boolean;
-  signinMessage: string;
-  currentUser: User | undefined | string;
-  logoutMessage: string;
-}
-
-interface Data {
-  data: User[];
+  isSubmitSuccess: boolean;
 }
 
 const initialState: InitialState = {
   users: [],
+  currentUser: null,
   isSignupSubmit: false,
-  usersFromStorage: [],
-  isAuthed: false,
-  signinMessage: "",
-  currentUser: "wait",
-  logoutMessage: "",
+  isSubmitSuccess: false,
 };
-
-export const signup = createAsyncThunk<void, User[]>("signup/setSignup", async (users: User[]) => {
-  return formAction.signup(users);
-});
-
-export const getUsers = createAsyncThunk<Data>("users/getUsers", async () => {
-  return formAction.getUsers()?.then((data: Data) => {
-    return data; //payload - data
-  }) as Promise<Data>;
-});
-
-export const signin = createAsyncThunk<string, User>("signin/setSignin", async (currentUser: User) => {
-  return formAction.signin(currentUser).then((data: string) => {
-    return data; //payload - data
-  }) as Promise<string>;
-});
-
-export const getCurrentUser = createAsyncThunk<User>("currentUser/getCurrentUser", async () => {
-  return formAction.checkLogin()?.then((data: User) => {
-    return data; //payload - data
-  }) as Promise<User>;
-});
-
-export const logout = createAsyncThunk<string>("logout/setLogout", async () => {
-  return formAction.logout()?.then((data: string) => {
-    return data; //payload - data
-  }) as Promise<string>;
-});
 
 export const usersInfoSlice = createSlice({
   name: "users",
@@ -63,59 +23,19 @@ export const usersInfoSlice = createSlice({
     setUsers: (state: InitialState, action: PayloadAction<User[]>) => {
       state.users = action.payload;
     },
+    setCurrentUser: (state: InitialState, action: PayloadAction<User | null>) => {
+      state.currentUser = action.payload;
+    },
     setSignupSubmit: (state: InitialState, action: PayloadAction<boolean>) => {
       state.isSignupSubmit = action.payload;
     },
-    setAuthed: (state: InitialState, action: PayloadAction<boolean>) => {
-      state.isAuthed = action.payload;
+    setSubmitSuccess: (state: InitialState, action: PayloadAction<boolean>) => {
+      state.isSubmitSuccess = action.payload;
     },
   },
-  extraReducers: (builder) => {
-    builder.addCase(getUsers.fulfilled, (state, action) => {
-      state.usersFromStorage = action.payload;
-    });
-    builder.addCase(getUsers.pending, (_state, _action) => {
-      console.log("pending");
-    });
-    builder.addCase(getUsers.rejected, (_state, _action) => {
-      console.log("rejected");
-    });
-
-    builder.addCase(getCurrentUser.fulfilled, (state, action) => {
-      state.currentUser = action.payload;
-    });
-    builder.addCase(getCurrentUser.pending, (state, _action) => {
-      state.currentUser = "wait";
-      console.log("pending");
-    });
-    builder.addCase(getCurrentUser.rejected, (_state, _action) => {
-      console.log("rejected");
-    });
-
-    builder.addCase(signin.fulfilled, (state, action) => {
-      state.signinMessage = action.payload;
-    });
-    builder.addCase(signin.pending, (state, _action) => {
-      state.signinMessage = "log in in progress...";
-      console.log("pending");
-    });
-    builder.addCase(signin.rejected, (_state, _action) => {
-      console.log("rejected");
-    });
-
-    builder.addCase(logout.fulfilled, (state, action) => {
-      state.logoutMessage = action.payload;
-    });
-    builder.addCase(logout.pending, (state, _action) => {
-      state.logoutMessage = "log out in progress...";
-      console.log("pending");
-    });
-    builder.addCase(logout.rejected, (_state, _action) => {
-      console.log("rejected");
-    });
-  },
+  extraReducers: (builder) => {},
 });
 
-export const { setUsers, setSignupSubmit, setAuthed } = usersInfoSlice.actions;
+export const { setUsers, setCurrentUser, setSignupSubmit, setSubmitSuccess } = usersInfoSlice.actions;
 
 export default usersInfoSlice.reducer;

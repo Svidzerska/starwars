@@ -7,7 +7,7 @@ import "./signin.scss";
 import { User } from "../interfaces/User";
 import { configSignin } from "./config/configSignin";
 
-import { getCurrentUser, logout, signin } from "../../features/users/usersInfoSlice";
+import { setCurrentUser, setUsers } from "../../features/users/usersInfoSlice";
 
 import FormBuilder from "../utilityComponents/FormBuilder/FormBuilder";
 
@@ -15,27 +15,25 @@ const Signin: React.FC = (): JSX.Element => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const usersFromStorage: any = useAppSelector((state) => state.users.usersFromStorage);
-  const currentUser: User | undefined | string = useAppSelector((state) => state.users.currentUser);
-  const logoutProcessInfo: string = useAppSelector((state) => state.users.logoutMessage);
-  const loginProcessInfo: string = useAppSelector((state) => state.users.signinMessage);
+  const users: User[] = useAppSelector((state) => state.users.users);
+
+  const currentUser: User | null = useAppSelector((state) => state.users.currentUser);
 
   const [values, setValues] = useState<User>({ username: "", password: "" });
-  const [isLogout, setLogout] = useState<boolean>(false);
-  const [isSignin, setSignin] = useState<boolean>(false);
 
   useEffect(() => {
-    console.log(isLogout);
-    isLogout && typeof currentUser !== "string" && setLogout(false);
-  }, [, currentUser]);
+    const usersFromStorage = localStorage.getItem("Users");
+    if (usersFromStorage) {
+      const usersFromStorageParse = JSON.parse(usersFromStorage);
+      dispatch(setUsers(usersFromStorageParse));
+    }
 
-  useEffect(() => {
-    console.log(currentUser);
-  }, [currentUser]);
-
-  useEffect(() => {
-    console.log(logoutProcessInfo);
-  }, [logoutProcessInfo]);
+    const currentUserFromStorage = localStorage.getItem("CurrentUser");
+    if (currentUserFromStorage) {
+      const currentUserFromStorageParse = JSON.parse(currentUserFromStorage);
+      dispatch(setCurrentUser(currentUserFromStorageParse));
+    }
+  }, []);
 
   const updateUsers = (__values: User): void => {
     setValues(__values);
@@ -44,23 +42,22 @@ const Signin: React.FC = (): JSX.Element => {
   const handleSubmit = (e: React.FormEvent<HTMLInputElement>): void => {
     e.preventDefault();
 
-    const checkUser = usersFromStorage?.find(
+    const checkUser = users?.find(
       (element: User) => element.username === values.username && element.password === values.password
     );
+
     if (checkUser) {
-      dispatch(signin(values))
-        .then(() => dispatch(getCurrentUser()))
-        .then(() => navigate("/products"));
+      dispatch(setCurrentUser(values));
+      localStorage.setItem("CurrentUser", JSON.stringify(values));
+      navigate("/products");
     } else {
       navigate("/signup");
     }
-    setSignin(true);
   };
 
   const handleLogout = (): void => {
-    dispatch(logout()).then(() => dispatch(getCurrentUser()));
-    setLogout(true);
-    setSignin(false);
+    localStorage.removeItem("CurrentUser");
+    dispatch(setCurrentUser(null));
   };
 
   return (
@@ -71,17 +68,7 @@ const Signin: React.FC = (): JSX.Element => {
       <Link to="products" className="switcher">
         Products
       </Link>
-      <i className="signin__info">{isSignin ? (loginProcessInfo !== "" ? loginProcessInfo : "") : ""}</i>
-      <br />
-      <i className="signin__info">
-        {currentUser === "wait"
-          ? "please wait for server response..."
-          : currentUser && typeof currentUser !== "string"
-          ? `You are login as ${currentUser.username}`
-          : `no current user`}
-      </i>
-      <br />
-      <i className="signin__info">{isLogout ? (logoutProcessInfo !== "" ? logoutProcessInfo : "") : ""}</i>
+      <i className="signin__info">{currentUser ? `You are login as ${currentUser.username}` : `no current user`}</i>
       <br />
       <button className="buttonLogout" onClick={handleLogout} disabled={!currentUser}>
         Log out

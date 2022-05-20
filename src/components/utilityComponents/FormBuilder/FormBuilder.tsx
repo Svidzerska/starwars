@@ -4,7 +4,7 @@ import { useAppSelector, useAppDispatch } from "../../../app/hooks";
 
 import "./formBuilder.scss";
 
-import { getUsers } from "../../../features/users/usersInfoSlice";
+import { setSubmitSuccess } from "../../../features/users/usersInfoSlice";
 
 import { Config } from "../../interfaces/Config";
 import { ValidationResult } from "../../interfaces/ValidationResult";
@@ -41,10 +41,7 @@ const FormBuilder: React.FC<Props> = ({
   }, [isSignupSubmit]);
 
   useEffect(() => {
-    dispatch(getUsers());
-  }, []);
-
-  useEffect(() => {
+    values.username && dispatch(setSubmitSuccess(false));
     validInputsArray.includes(false) ? setValid(false) : setValid(true);
   }, [values]);
 

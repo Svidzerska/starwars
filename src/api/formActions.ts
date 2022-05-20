@@ -9,22 +9,22 @@ export const formAction = {
     });
   },
 
-  getUsers: () => {
-    return wait(2000).then(() => {
-      const usersFromStorage = localStorage.getItem("Users");
-      if (usersFromStorage) {
-        const usersFromStorageParse = JSON.parse(usersFromStorage);
-        return usersFromStorageParse;
-      }
-    });
-  },
+  // getUsers: () => {
+  //   return wait(2000).then(() => {
+  //     const usersFromStorage = localStorage.getItem("Users");
+  //     if (usersFromStorage) {
+  //       const usersFromStorageParse = JSON.parse(usersFromStorage);
+  //       return usersFromStorageParse;
+  //     }
+  //   });
+  // },
 
-  signin: (currentUser: User) => {
-    return wait(2000).then(() => {
-      localStorage.setItem("CurrentUser", JSON.stringify(currentUser));
-      return "you are successfully logged in!";
-    });
-  },
+  // signin: (currentUser: User) => {
+  //   return wait(2000).then(() => {
+  //     localStorage.setItem("CurrentUser", JSON.stringify(currentUser));
+  //     return "you are successfully logged in!";
+  //   });
+  // },
 
   checkLogin: () => {
     return wait(2000).then(() => {
@@ -36,10 +36,10 @@ export const formAction = {
     });
   },
 
-  logout: () => {
-    return wait(2000).then(() => {
-      localStorage.removeItem("CurrentUser");
-      return "you are successfully logged out!";
-    });
-  },
+  // logout: () => {
+  //   return wait(2000).then(() => {
+  //     localStorage.removeItem("CurrentUser");
+  //     return "you are successfully logged out!";
+  //   });
+  // },
 };

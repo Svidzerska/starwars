@@ -6,7 +6,7 @@ import "./App.css";
 
 import { User } from "./components/interfaces/User";
 
-import { getCurrentUser, setAuthed } from "./features/users/usersInfoSlice";
+import { setCurrentUser } from "./features/users/usersInfoSlice";
 
 import PrivateRoute from "./components/utilityComponents/PrivateRoute";
 
@@ -20,10 +20,14 @@ import ShowDetails from "./components/products/utilityDetails/ShowDetails";
 const App: React.FC = (): JSX.Element => {
   const dispatch = useAppDispatch();
 
-  const currentUser: User | undefined | string = useAppSelector((state) => state.users.currentUser);
+  const currentUser: User | null = useAppSelector((state) => state.users.currentUser);
 
   useEffect(() => {
-    dispatch(getCurrentUser());
+    const currentUserFromStorage = localStorage.getItem("CurrentUser");
+    if (currentUserFromStorage) {
+      const currentUserFromStorageParse = JSON.parse(currentUserFromStorage);
+      dispatch(setCurrentUser(currentUserFromStorageParse));
+    }
   }, []);
 
   return (
