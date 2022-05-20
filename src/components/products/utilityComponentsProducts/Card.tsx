@@ -24,7 +24,7 @@ interface Props {
 const CardRender: React.FC<Props> = ({ entities }): JSX.Element => {
   const dispatch = useAppDispatch();
 
-  const isBlockView: boolean = useAppSelector((state) => state.products.isBlockViewServer);
+  const isBlockView: boolean = useAppSelector((state) => state.products.isBlockView);
 
   const [peculiarities, setPeculiarities] = useState<string[]>([]);
 

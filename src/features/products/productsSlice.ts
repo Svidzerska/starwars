@@ -7,14 +7,14 @@ interface InitialState {
   people: Entities;
   starships: Entities;
   entity: any;
-  isBlockViewServer: boolean;
+  isBlockView: boolean;
 }
 
 const initialState: InitialState = {
   people: {},
   starships: {},
   entity: {},
-  isBlockViewServer: true,
+  isBlockView: true,
 };
 
 export const getPeople = createAsyncThunk<Entities>("people/getPeople", async () => {
@@ -35,23 +35,13 @@ export const getEntity = createAsyncThunk<any, string>("entity/getEntity", async
   }) as Promise<any>;
 });
 
-export const setView = createAsyncThunk<void, boolean>("view/setView", async (isBlockView: boolean) => {
-  return products.setView(isBlockView);
-});
-
-export const getView = createAsyncThunk<boolean>("view/getView", async () => {
-  return products.getView()?.then((data: boolean) => {
-    return data; //payload - data
-  }) as Promise<boolean>;
-});
-
 export const productsSlice = createSlice({
   name: "users",
   initialState,
   reducers: {
-    // setUrlDetails: (state: InitialState, action: PayloadAction<string>) => {
-    //   state.urlDetails = action.payload;
-    // },
+    setBlockView: (state: InitialState, action: PayloadAction<boolean>) => {
+      state.isBlockView = action.payload;
+    },
   },
 
   extraReducers: (builder) => {
@@ -86,19 +76,9 @@ export const productsSlice = createSlice({
     builder.addCase(getEntity.rejected, (_state, _action) => {
       console.log("rejected");
     });
-
-    builder.addCase(getView.fulfilled, (state, action) => {
-      state.isBlockViewServer = action.payload;
-    });
-    builder.addCase(getView.pending, (_state, _action) => {
-      console.log("pending");
-    });
-    builder.addCase(getView.rejected, (_state, _action) => {
-      console.log("rejected");
-    });
   },
 });
 
-export const {} = productsSlice.actions;
+export const { setBlockView } = productsSlice.actions;
 
 export default productsSlice.reducer;
