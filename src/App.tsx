@@ -22,6 +22,8 @@ const App: React.FC = (): JSX.Element => {
 
   const currentUser: User | null = useAppSelector((state) => state.users.currentUser);
 
+  useEffect(() => {}, []);
+
   useEffect(() => {
     const currentUserFromStorage = localStorage.getItem("CurrentUser");
     if (currentUserFromStorage) {

@@ -9,6 +9,7 @@ import { Data } from "../interfaces/Data";
 
 import { getPeople, getStarships } from "../../features/products/productsSlice";
 import WaitScreen from "../utilityComponents/waitScreen/WaitScreen";
+import { setCurrentUser } from "../../features/users/usersInfoSlice";
 
 const Products: React.FC = (): JSX.Element => {
   const navigate = useNavigate();
