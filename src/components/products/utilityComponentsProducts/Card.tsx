@@ -18,7 +18,7 @@ import "./card.scss";
 import { Entities } from "../../interfaces/Entities";
 
 interface Props {
-  entities: Entities;
+  entities: Entities | null;
 }
 
 const CardRender: React.FC<Props> = ({ entities }): JSX.Element => {
@@ -29,7 +29,7 @@ const CardRender: React.FC<Props> = ({ entities }): JSX.Element => {
   const [peculiarities, setPeculiarities] = useState<string[]>([]);
 
   useEffect(() => {
-    if (entities.results) {
+    if (entities?.results) {
       const keys: string[] = Object.keys(entities.results[0]);
       setPeculiarities(keys);
     }
@@ -37,7 +37,7 @@ const CardRender: React.FC<Props> = ({ entities }): JSX.Element => {
 
   const fotoArray = [foto0, foto1, foto2, foto3, foto4, foto5, foto6, foto7, foto8, foto9];
 
-  const cards: JSX.Element[] | undefined = entities.results?.map((entity: any) => {
+  const cards: JSX.Element[] | undefined = entities?.results?.map((entity: any) => {
     const properties: (JSX.Element | undefined)[] = peculiarities.map((element, index) => {
       while (index <= 4 && index >= 1) {
         return (

@@ -1,19 +1,24 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 
 import { products } from "../../api/products";
+import { Data } from "../../components/interfaces/Data";
 import { Entities } from "../../components/interfaces/Entities";
 
 interface InitialState {
-  people: Entities;
-  starships: Entities;
-  entity: any;
+  people: Data;
+  starships: Data;
+  entity: {
+    data: any | null;
+    isPending: boolean;
+    error: string | null;
+  };
   isBlockView: boolean;
 }
 
 const initialState: InitialState = {
-  people: {},
-  starships: {},
-  entity: {},
+  people: { data: null, isPending: false, error: null },
+  starships: { data: null, isPending: false, error: null },
+  entity: { data: null, isPending: false, error: null },
   isBlockView: true,
 };
 
@@ -46,35 +51,51 @@ export const productsSlice = createSlice({
 
   extraReducers: (builder) => {
     builder.addCase(getPeople.fulfilled, (state, action) => {
-      state.people = action.payload;
+      state.people.data = action.payload;
+      state.people.isPending = false;
+      state.people.error = null;
     });
     builder.addCase(getPeople.pending, (state, _action) => {
-      state.people = { count: "Loarding..." };
-      console.log("pending");
+      state.people.data = null;
+      state.people.isPending = true;
+      state.people.error = null;
     });
-    builder.addCase(getPeople.rejected, (_state, _action) => {
-      console.log("rejected");
+    builder.addCase(getPeople.rejected, (state, _action) => {
+      state.people.data = null;
+      state.people.isPending = false;
+      state.people.error = "Something was wrong...";
     });
 
     builder.addCase(getStarships.fulfilled, (state, action) => {
-      state.starships = action.payload;
+      state.starships.data = action.payload;
+      state.starships.isPending = false;
+      state.starships.error = null;
     });
     builder.addCase(getStarships.pending, (state, _action) => {
-      state.starships = { count: "Loarding..." };
-      console.log("pending");
+      state.starships.data = null;
+      state.starships.isPending = true;
+      state.starships.error = null;
     });
-    builder.addCase(getStarships.rejected, (_state, _action) => {
-      console.log("rejected");
+    builder.addCase(getStarships.rejected, (state, _action) => {
+      state.starships.data = null;
+      state.starships.isPending = false;
+      state.starships.error = "Something was wrong...";
     });
 
     builder.addCase(getEntity.fulfilled, (state, action) => {
-      state.entity = action.payload;
+      state.entity.data = action.payload;
+      state.entity.isPending = false;
+      state.entity.error = null;
     });
-    builder.addCase(getEntity.pending, (_state, _action) => {
-      console.log("pending");
+    builder.addCase(getEntity.pending, (state, _action) => {
+      state.entity.data = null;
+      state.entity.isPending = true;
+      state.entity.error = null;
     });
-    builder.addCase(getEntity.rejected, (_state, _action) => {
-      console.log("rejected");
+    builder.addCase(getEntity.rejected, (state, _action) => {
+      state.entity.data = null;
+      state.entity.isPending = false;
+      state.entity.error = "Something was wrong...";
     });
   },
 });

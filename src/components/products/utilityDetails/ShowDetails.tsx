@@ -17,6 +17,7 @@ import foto0 from "../../../images/people/10.jpg";
 import { useAppSelector, useAppDispatch } from "../../../app/hooks";
 
 import { getEntity } from "../../../features/products/productsSlice";
+import WaitScreen from "../../utilityComponents/waitScreen/WaitScreen";
 
 interface Props {
   parentBlock: string;
@@ -26,20 +27,25 @@ const ShowDetails: React.FC<Props> = ({ parentBlock }): JSX.Element => {
   // const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const entity: any = useAppSelector((state) => state.products.entity);
+  const entity: {
+    data: any | null; //any?
+    isPending: boolean;
+    error: string | null;
+  } = useAppSelector((state) => state.products.entity);
 
   const [propertiesName, setPropertiesName] = useState<string[]>([]);
 
   const { entityId } = useParams();
-  console.log(entityId);
 
   useEffect(() => {
     dispatch(getEntity(`https://swapi.dev/api/${parentBlock}/${entityId}`));
   }, []);
 
   useEffect(() => {
-    const keys: string[] = Object.keys(entity);
-    setPropertiesName(keys);
+    if (entity.data) {
+      const keys: string[] = Object.keys(entity.data);
+      setPropertiesName(keys);
+    }
   }, [entity]);
 
   const fotoArray = [foto0, foto1, foto2, foto3, foto4, foto5, foto6, foto7, foto8, foto9];
@@ -49,7 +55,7 @@ const ShowDetails: React.FC<Props> = ({ parentBlock }): JSX.Element => {
     return (
       <p key={property}>
         <span className="propertyName">{property}: </span>
-        <span>{entity[property]}</span>
+        <span>{entity.data && entity.data[property]}</span>
       </p>
     );
   });
@@ -60,41 +66,47 @@ const ShowDetails: React.FC<Props> = ({ parentBlock }): JSX.Element => {
 
   return (
     <>
-      <header className="entity_header">
-        {/* <button onClick={handleBack}>Back to {parentBlock}</button> */}
-        <Link to={`/products/${parentBlock}`}>Back to {parentBlock}</Link>
-        <button></button>
-      </header>
-      {parentBlock === "starships" ? (
-        <main className="entity_main">
-          <img src={fotoArray[fotoRandom]} alt="" />
-          <h1>{entity.name}</h1>
-          <section>
-            <h2 className="category_name">{"What is it?"}</h2>
-            {characteristics.filter((_item, index) => index >= 1 && index <= 3)}
-          </section>
-          <section>
-            <h2 className="category_name">{"Physical characteristics"}</h2>
-            {characteristics.filter((_item, index) => index >= 4 && index <= 11)}
-          </section>
-          <section>
-            <h2 className="category_name">{"Class of starships"}</h2>
-            {characteristics.filter((_item, index) => index === 12)}
-          </section>
-        </main>
+      {entity.isPending ? (
+        <WaitScreen />
       ) : (
-        <main className="entity_main">
-          <img src={fotoArray[fotoRandom]} alt="" />
-          <h1>{entity.name}</h1>
-          <section>
-            <h2 className="category_name">{"Physical details"}</h2>
-            {characteristics.filter((_item, index) => index >= 1 && index <= 5)}
-          </section>
-          <section>
-            <h2 className="category_name">{"Who is it?"}</h2>
-            {characteristics.filter((_item, index) => index >= 6 && index <= 7)}
-          </section>
-        </main>
+        <>
+          <header className="entity_header">
+            {/* <button onClick={handleBack}>Back to {parentBlock}</button> */}
+            <Link to={`/products/${parentBlock}`}>Back to {parentBlock}</Link>
+            <button></button>
+          </header>
+          {parentBlock === "starships" ? (
+            <main className="entity_main">
+              <img src={fotoArray[fotoRandom]} alt="" />
+              <h1>{entity.data?.name}</h1>
+              <section>
+                <h2 className="category_name">{"What is it?"}</h2>
+                {characteristics.filter((_item, index) => index >= 1 && index <= 3)}
+              </section>
+              <section>
+                <h2 className="category_name">{"Physical characteristics"}</h2>
+                {characteristics.filter((_item, index) => index >= 4 && index <= 11)}
+              </section>
+              <section>
+                <h2 className="category_name">{"Class of starships"}</h2>
+                {characteristics.filter((_item, index) => index === 12)}
+              </section>
+            </main>
+          ) : (
+            <main className="entity_main">
+              <img src={fotoArray[fotoRandom]} alt="" />
+              <h1>{entity.data?.name}</h1>
+              <section>
+                <h2 className="category_name">{"Physical details"}</h2>
+                {characteristics.filter((_item, index) => index >= 1 && index <= 5)}
+              </section>
+              <section>
+                <h2 className="category_name">{"Who is it?"}</h2>
+                {characteristics.filter((_item, index) => index >= 6 && index <= 7)}
+              </section>
+            </main>
+          )}
+        </>
       )}
     </>
   );

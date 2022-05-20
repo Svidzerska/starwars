@@ -1,26 +1,33 @@
 import React, { useEffect, useState } from "react";
 import { useAppSelector, useAppDispatch } from "../../../app/hooks";
 
-import { getPeople, getStarships } from "../../../features/products/productsSlice";
+import { Data } from "../../interfaces/Data";
 
-import { Entities } from "../../interfaces/Entities";
+import { getPeople } from "../../../features/products/productsSlice";
 
 import CardRender from "../utilityComponentsProducts/Card";
 import Header from "../utilityComponentsProducts/Header/Header";
+import WaitScreen from "../../utilityComponents/waitScreen/WaitScreen";
 
 const People: React.FC = (): JSX.Element => {
   const dispatch = useAppDispatch();
 
-  const people: Entities = useAppSelector((state) => state.products.people);
+  const people: Data = useAppSelector((state) => state.products.people);
 
   useEffect(() => {
-    !people.count && dispatch(getPeople());
+    dispatch(getPeople());
   }, []);
 
   return (
     <>
-      <Header />
-      <CardRender entities={people} />
+      {people.isPending ? (
+        <WaitScreen />
+      ) : (
+        <>
+          <Header />
+          <CardRender entities={people.data} />
+        </>
+      )}
     </>
   );
 };
