@@ -11,6 +11,6 @@ export const configSignin = [
     fieldName: "password",
     type: "password",
     placeholder: "Password",
-    validationMethods: [validatingFunctions.checkPass],
+    validationMethods: [validatingFunctions.checkPass, validatingFunctions.checkLength],
   },
 ];

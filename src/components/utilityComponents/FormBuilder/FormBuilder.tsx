@@ -45,7 +45,7 @@ const FormBuilder: React.FC<Props> = ({
   }, []);
 
   useEffect(() => {
-    validInputsArray.includes(undefined) ? setValid(false) : setValid(true);
+    validInputsArray.includes(false) ? setValid(false) : setValid(true);
   }, [values]);
 
   useEffect(() => {
@@ -63,26 +63,26 @@ const FormBuilder: React.FC<Props> = ({
     setValues({ ...values, [id]: value });
   };
 
-  let validInputsArray: (ValidationResult | undefined)[] = [];
+  let validInputsArray: (boolean | undefined)[] = [];
 
   const listOfFields: JSX.Element[] = config.map((field: Config) => {
     const name = field.fieldName;
 
     const validationResult: ValidationResult[] = field.validationMethods.map((rule) => {
-      return values[name] && rule(values[name], password);
+      return values[name] ? rule(values[name], password) : { valid: false };
     });
 
-    let validInput: ValidationResult | undefined = validationResult.find((element) => element?.valid);
+    let unValidInput: ValidationResult | undefined = validationResult.find((element) => element?.valid === false);
 
-    validInputsArray.push(validInput);
+    validInputsArray.push(unValidInput?.valid);
 
     return (
       <fieldset key={name}>
         {validationResult.map(
-          (element) =>
-            element &&
+          (element, index) =>
+            element.error &&
             element?.error !== "" && (
-              <label htmlFor={name}>
+              <label htmlFor={name} key={`name` + index}>
                 <i>{element?.error}</i>
                 <br />
               </label>
