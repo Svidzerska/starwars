@@ -33,7 +33,6 @@ const Signup: React.FC = (): JSX.Element => {
     if (users.length !== 0) {
       localStorage.setItem("Users", JSON.stringify(users));
       dispatch(setSignupSubmit(true));
-      dispatch(setSubmitSuccess(true));
     }
   }, [users]);
 
@@ -55,6 +54,8 @@ const Signup: React.FC = (): JSX.Element => {
       usersFromStorage ? dispatch(setUsers([...JSON.parse(usersFromStorage), values])) : dispatch(setUsers([values]));
       setExistUser(false);
     }
+
+    dispatch(setSubmitSuccess(true));
   };
 
   return (

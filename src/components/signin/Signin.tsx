@@ -26,8 +26,6 @@ const Signin: React.FC = (): JSX.Element => {
 
     usersFromStorage && dispatch(setUsers(JSON.parse(usersFromStorage)));
     currentUserFromStorage && dispatch(setCurrentUser(JSON.parse(currentUserFromStorage)));
-
-    dispatch(setSubmitSuccess(false));
   }, []);
 
   const updateUsers = (__values: User): void => {
