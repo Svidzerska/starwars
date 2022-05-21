@@ -66,42 +66,52 @@ const ShowDetails: React.FC<Props> = ({ parentBlock }): JSX.Element => {
           </header>
           {parentBlock === "starships" ? (
             <main className="entity_main">
-              <>
-                <img src={fotoArray[fotoRandom]} alt="" />
-                <h1>{entity.data?.name}</h1>
+              <img src={fotoArray[fotoRandom]} alt="" />
+              <h1>{entity.data?.name}</h1>
 
+              <section>
                 <h2 className="category_name">{"Who is it?"}</h2>
-                {propertiesName.map((property: string, index: number) => {
-                  index >= 1 && index <= 3 && <Property property={property} entity={entity} />;
-                })}
+                {propertiesName.map(
+                  (property: string, index: number) =>
+                    index >= 1 && index <= 3 && <Property property={property} entity={entity} />
+                )}
+              </section>
 
+              <section>
                 <h2 className="category_name">{"Physical characteristics"}</h2>
-                {propertiesName.map((property: string, index: number) => {
-                  index >= 4 && index <= 11 && <Property property={property} entity={entity} />;
-                })}
+                {propertiesName.map(
+                  (property: string, index: number) =>
+                    index >= 4 && index <= 11 && <Property property={property} entity={entity} />
+                )}
+              </section>
 
+              <section>
                 <h2 className="category_name">{"Class of starships"}</h2>
-                {propertiesName.map((property: string, index: number) => {
-                  index === 12 && <Property property={property} entity={entity} />;
-                })}
-              </>
+                {propertiesName.map(
+                  (property: string, index: number) => index === 12 && <Property property={property} entity={entity} />
+                )}
+              </section>
             </main>
           ) : (
             <main className="entity_main">
-              <>
-                <img src={fotoArray[fotoRandom]} alt="" />
-                <h1>{entity.data?.name}</h1>
+              <img src={fotoArray[fotoRandom]} alt="" />
+              <h1>{entity.data?.name}</h1>
 
+              <section>
                 <h2 className="category_name">{"Physical details"}</h2>
-                {propertiesName.map((property: string, index: number) => {
-                  index >= 1 && index <= 5 && <Property property={property} entity={entity} />;
-                })}
+                {propertiesName.map(
+                  (property: string, index: number) =>
+                    index >= 1 && index <= 5 && <Property property={property} entity={entity} />
+                )}
+              </section>
 
+              <section>
                 <h2 className="category_name">{"Who is it?"}</h2>
-                {propertiesName.map((property: string, index: number) => {
-                  index >= 6 && index <= 7 && <Property property={property} entity={entity} />;
-                })}
-              </>
+                {propertiesName.map(
+                  (property: string, index: number) =>
+                    index >= 6 && index <= 7 && <Property property={property} entity={entity} />
+                )}
+              </section>
             </main>
           )}
         </>
