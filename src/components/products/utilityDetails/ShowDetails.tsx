@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 import "./showDetails.scss";
 
@@ -25,7 +25,7 @@ interface Props {
 }
 
 const ShowDetails: React.FC<Props> = ({ parentBlock }): JSX.Element => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   const entity: {
@@ -49,10 +49,6 @@ const ShowDetails: React.FC<Props> = ({ parentBlock }): JSX.Element => {
     entity.data && setPropertiesName(Object.keys(entity.data));
   }, [entity]);
 
-  // const handleBack = (): void => {
-  //   navigate(`/products/${parentBlock}`);
-  // };
-
   return (
     <>
       {entity.isPending ? (
@@ -60,8 +56,7 @@ const ShowDetails: React.FC<Props> = ({ parentBlock }): JSX.Element => {
       ) : (
         <>
           <header className="entity_header">
-            {/* <button onClick={handleBack}>Back to {parentBlock}</button> */}
-            <Link to={`/products/${parentBlock}`}>Back to {parentBlock}</Link>
+            <button onClick={() => navigate(-1)}>Back to {parentBlock}</button>
             <button></button>
           </header>
           {parentBlock === "starships" ? (
@@ -121,3 +116,6 @@ const ShowDetails: React.FC<Props> = ({ parentBlock }): JSX.Element => {
 };
 
 export default ShowDetails;
+function useHistory() {
+  throw new Error("Function not implemented.");
+}
