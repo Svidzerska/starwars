@@ -22,6 +22,10 @@ const Signin: React.FC = (): JSX.Element => {
   const [values, setValues] = useState<User>({ username: "", password: "" });
 
   useEffect(() => {
+    console.log(currentUser);
+  }, [currentUser]);
+
+  useEffect(() => {
     const usersFromStorage = localStorage.getItem("Users");
     if (usersFromStorage) {
       const usersFromStorageParse = JSON.parse(usersFromStorage);

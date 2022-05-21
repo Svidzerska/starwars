@@ -22,22 +22,20 @@ const App: React.FC = (): JSX.Element => {
 
   const currentUser: User | null = useAppSelector((state) => state.users.currentUser);
 
-  useEffect(() => {}, []);
-
-  useEffect(() => {
-    const currentUserFromStorage = localStorage.getItem("CurrentUser");
-    if (currentUserFromStorage) {
-      const currentUserFromStorageParse = JSON.parse(currentUserFromStorage);
-      dispatch(setCurrentUser(currentUserFromStorageParse));
-    }
-  }, []);
-
   return (
     <Router>
       <Routes>
         <Route index element={<Signin />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/products" element={<PrivateRoute isAuthed={currentUser} component={<Outlet />} />}>
+        <Route
+          path="/products"
+          element={
+            <PrivateRoute
+              isAuthed={currentUser === null ? !!localStorage.getItem("CurrentUser") : true}
+              component={<Outlet />}
+            />
+          }
+        >
           <Route index element={<Products />} />
           <Route path="people" element={<Outlet />}>
             <Route index element={<People />} />

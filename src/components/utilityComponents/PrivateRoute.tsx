@@ -5,7 +5,7 @@ import { User } from "../interfaces/User";
 
 interface Props {
   component: JSX.Element;
-  isAuthed: User | null;
+  isAuthed: boolean;
 }
 
 const PrivateRoute: React.FC<Props> = ({ component, isAuthed }): JSX.Element => {
