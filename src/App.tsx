@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { BrowserRouter as Router, Routes, Route, Outlet } from "react-router-dom";
-import { useAppSelector, useAppDispatch } from "./app/hooks";
+import { useAppSelector } from "./app/hooks";
 
 import "./App.css";
 
 import { User } from "./components/interfaces/User";
-
-import { setCurrentUser } from "./features/users/usersInfoSlice";
 
 import PrivateRoute from "./components/utilityComponents/PrivateRoute";
 
@@ -18,8 +16,6 @@ import Starships from "./components/products/starships/Starships";
 import ShowDetails from "./components/products/utilityDetails/ShowDetails";
 
 const App: React.FC = (): JSX.Element => {
-  const dispatch = useAppDispatch();
-
   const currentUser: User | null = useAppSelector((state) => state.users.currentUser);
 
   return (

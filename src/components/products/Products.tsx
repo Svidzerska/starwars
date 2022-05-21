@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 
 import "./products.scss";
@@ -8,12 +7,11 @@ import "./products.scss";
 import { Data } from "../interfaces/Data";
 
 import { getPeople, getStarships } from "../../features/products/productsSlice";
+
 import WaitScreen from "../utilityComponents/waitScreen/WaitScreen";
-import { setCurrentUser } from "../../features/users/usersInfoSlice";
 
 const Products: React.FC = (): JSX.Element => {
   const navigate = useNavigate();
-
   const dispatch = useAppDispatch();
 
   const people: Data = useAppSelector((state) => state.products.people);
@@ -25,9 +23,6 @@ const Products: React.FC = (): JSX.Element => {
   }, []);
 
   const chooseCard = (e: React.MouseEvent<HTMLButtonElement>): void => {
-    const a = e.currentTarget.id;
-    console.log(a);
-
     navigate(`/products/${e.currentTarget.id}`);
   };
 

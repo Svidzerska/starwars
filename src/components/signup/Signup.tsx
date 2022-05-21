@@ -4,10 +4,10 @@ import { useAppSelector, useAppDispatch } from "../../app/hooks";
 
 import "./signup.scss";
 
-import { setUsers, setSignupSubmit, setSubmitSuccess } from "../../features/users/usersInfoSlice";
-
 import { configSignup } from "./config/configSignup";
 import { User } from "../../components/interfaces/User";
+
+import { setUsers, setSignupSubmit, setSubmitSuccess } from "../../features/users/usersInfoSlice";
 
 import FormBuilder from "../utilityComponents/FormBuilder/FormBuilder";
 
@@ -43,6 +43,7 @@ const Signup: React.FC = (): JSX.Element => {
 
   const handleSubmit = (e: React.FormEvent<HTMLInputElement>): void => {
     e.preventDefault();
+
     const repeatUser = users.find(
       (element) => values.username === element.username && values.password === element.password
     );
@@ -51,14 +52,7 @@ const Signup: React.FC = (): JSX.Element => {
       setExistUser(true);
     } else {
       const usersFromStorage = localStorage.getItem("Users");
-
-      if (usersFromStorage) {
-        const usersFromStorageParse = JSON.parse(usersFromStorage);
-        dispatch(setUsers([...usersFromStorageParse, values]));
-      } else {
-        dispatch(setUsers([values]));
-      }
-
+      usersFromStorage ? dispatch(setUsers([...JSON.parse(usersFromStorage), values])) : dispatch(setUsers([values]));
       setExistUser(false);
     }
   };

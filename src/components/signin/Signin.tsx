@@ -16,27 +16,16 @@ const Signin: React.FC = (): JSX.Element => {
   const dispatch = useAppDispatch();
 
   const users: User[] = useAppSelector((state) => state.users.users);
-
   const currentUser: User | null = useAppSelector((state) => state.users.currentUser);
 
   const [values, setValues] = useState<User>({ username: "", password: "" });
 
   useEffect(() => {
-    console.log(currentUser);
-  }, [currentUser]);
-
-  useEffect(() => {
     const usersFromStorage = localStorage.getItem("Users");
-    if (usersFromStorage) {
-      const usersFromStorageParse = JSON.parse(usersFromStorage);
-      dispatch(setUsers(usersFromStorageParse));
-    }
-
     const currentUserFromStorage = localStorage.getItem("CurrentUser");
-    if (currentUserFromStorage) {
-      const currentUserFromStorageParse = JSON.parse(currentUserFromStorage);
-      dispatch(setCurrentUser(currentUserFromStorageParse));
-    }
+
+    usersFromStorage && dispatch(setUsers(JSON.parse(usersFromStorage)));
+    currentUserFromStorage && dispatch(setCurrentUser(JSON.parse(currentUserFromStorage)));
   }, []);
 
   const updateUsers = (__values: User): void => {

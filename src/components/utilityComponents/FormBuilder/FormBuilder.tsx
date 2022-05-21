@@ -4,10 +4,10 @@ import { useAppSelector, useAppDispatch } from "../../../app/hooks";
 
 import "./formBuilder.scss";
 
-import { setSubmitSuccess } from "../../../features/users/usersInfoSlice";
-
 import { Config } from "../../interfaces/Config";
 import { ValidationResult } from "../../interfaces/ValidationResult";
+
+import { setSubmitSuccess } from "../../../features/users/usersInfoSlice";
 
 interface Props {
   config: Config[];

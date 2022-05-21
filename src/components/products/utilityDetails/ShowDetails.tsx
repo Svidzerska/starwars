@@ -18,6 +18,7 @@ import { useAppSelector, useAppDispatch } from "../../../app/hooks";
 
 import { getEntity } from "../../../features/products/productsSlice";
 import WaitScreen from "../../utilityComponents/waitScreen/WaitScreen";
+import Property from "./renderSection/Property";
 
 interface Props {
   parentBlock: string;
@@ -37,28 +38,16 @@ const ShowDetails: React.FC<Props> = ({ parentBlock }): JSX.Element => {
 
   const { entityId } = useParams();
 
+  const fotoArray = [foto0, foto1, foto2, foto3, foto4, foto5, foto6, foto7, foto8, foto9];
+  const fotoRandom = Math.floor(Math.random() * 10);
+
   useEffect(() => {
     dispatch(getEntity(`https://swapi.dev/api/${parentBlock}/${entityId}`));
   }, []);
 
   useEffect(() => {
-    if (entity.data) {
-      const keys: string[] = Object.keys(entity.data);
-      setPropertiesName(keys);
-    }
+    entity.data && setPropertiesName(Object.keys(entity.data));
   }, [entity]);
-
-  const fotoArray = [foto0, foto1, foto2, foto3, foto4, foto5, foto6, foto7, foto8, foto9];
-  const fotoRandom = Math.floor(Math.random() * 10);
-
-  const characteristics: JSX.Element[] = propertiesName.map((property: string) => {
-    return (
-      <p key={property}>
-        <span className="propertyName">{property}: </span>
-        <span>{entity.data && entity.data[property]}</span>
-      </p>
-    );
-  });
 
   // const handleBack = (): void => {
   //   navigate(`/products/${parentBlock}`);
@@ -77,33 +66,42 @@ const ShowDetails: React.FC<Props> = ({ parentBlock }): JSX.Element => {
           </header>
           {parentBlock === "starships" ? (
             <main className="entity_main">
-              <img src={fotoArray[fotoRandom]} alt="" />
-              <h1>{entity.data?.name}</h1>
-              <section>
-                <h2 className="category_name">{"What is it?"}</h2>
-                {characteristics.filter((_item, index) => index >= 1 && index <= 3)}
-              </section>
-              <section>
+              <>
+                <img src={fotoArray[fotoRandom]} alt="" />
+                <h1>{entity.data?.name}</h1>
+
+                <h2 className="category_name">{"Who is it?"}</h2>
+                {propertiesName.map((property: string, index: number) => {
+                  index >= 1 && index <= 3 && <Property property={property} entity={entity} />;
+                })}
+
                 <h2 className="category_name">{"Physical characteristics"}</h2>
-                {characteristics.filter((_item, index) => index >= 4 && index <= 11)}
-              </section>
-              <section>
+                {propertiesName.map((property: string, index: number) => {
+                  index >= 4 && index <= 11 && <Property property={property} entity={entity} />;
+                })}
+
                 <h2 className="category_name">{"Class of starships"}</h2>
-                {characteristics.filter((_item, index) => index === 12)}
-              </section>
+                {propertiesName.map((property: string, index: number) => {
+                  index === 12 && <Property property={property} entity={entity} />;
+                })}
+              </>
             </main>
           ) : (
             <main className="entity_main">
-              <img src={fotoArray[fotoRandom]} alt="" />
-              <h1>{entity.data?.name}</h1>
-              <section>
+              <>
+                <img src={fotoArray[fotoRandom]} alt="" />
+                <h1>{entity.data?.name}</h1>
+
                 <h2 className="category_name">{"Physical details"}</h2>
-                {characteristics.filter((_item, index) => index >= 1 && index <= 5)}
-              </section>
-              <section>
+                {propertiesName.map((property: string, index: number) => {
+                  index >= 1 && index <= 5 && <Property property={property} entity={entity} />;
+                })}
+
                 <h2 className="category_name">{"Who is it?"}</h2>
-                {characteristics.filter((_item, index) => index >= 6 && index <= 7)}
-              </section>
+                {propertiesName.map((property: string, index: number) => {
+                  index >= 6 && index <= 7 && <Property property={property} entity={entity} />;
+                })}
+              </>
             </main>
           )}
         </>

@@ -1,7 +1,5 @@
-import { useEffect } from "react";
+import React from "react";
 import { Navigate } from "react-router-dom";
-
-import { User } from "../interfaces/User";
 
 interface Props {
   component: JSX.Element;
@@ -9,10 +7,6 @@ interface Props {
 }
 
 const PrivateRoute: React.FC<Props> = ({ component, isAuthed }): JSX.Element => {
-  useEffect(() => {
-    console.log(isAuthed);
-  }, [isAuthed]);
-
   return isAuthed ? component : <Navigate to={{ pathname: "/" }} />;
 };
 
