@@ -20,6 +20,7 @@ const Signup: React.FC = (): JSX.Element => {
   const [values, setValues] = useState<User>({ username: "", password: "", confirmPassword: "" });
   const [isExistUser, setExistUser] = useState<boolean>(false);
   const [isSubmitSuccess, setSubmitSuccess] = useState<boolean>(false);
+  const [repeatMessage, setRepeatMessage] = useState<string | null>(null);
 
   useEffect(() => {
     const usersFromStorage = localStorage.getItem("Users");
@@ -45,11 +46,20 @@ const Signup: React.FC = (): JSX.Element => {
   const handleSubmit = (e: React.FormEvent<HTMLInputElement>): void => {
     e.preventDefault();
 
-    const repeatUser = users.find(
-      (element) => values.username === element.username && values.password === element.password
-    );
+    // const repeatUser = users.find(
+    //   (element) => values.username === element.username || values.password === element.password
+    // );
+
+    const repeatUserName = users.find((element) => values.username === element.username);
+
+    const repeatPassword = users.find((element) => values.password === element.password);
+
+    const repeatUser = repeatUserName || repeatPassword;
 
     if (repeatUser) {
+      repeatUserName
+        ? setRepeatMessage("This username is already used")
+        : setRepeatMessage("This password is already used");
       setExistUser(true);
     } else {
       dispatch(setUsers([...users, values]));
@@ -64,6 +74,8 @@ const Signup: React.FC = (): JSX.Element => {
         Sign in
       </Link>
       <i className="signup__warning">{isExistUser && "the user already exists, please sign in"}</i>
+      <br />
+      <i className="signup__warning">{isExistUser && repeatMessage}</i>
       <i className="signup__warning">{isSubmitSuccess && "You are successfully signed up, please sign in"}</i>
       <FormBuilder
         updateUsers={updateUsers}
