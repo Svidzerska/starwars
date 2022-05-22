@@ -7,7 +7,7 @@ import "./signup.scss";
 import { configSignup } from "./config/configSignup";
 import { User } from "../../components/interfaces/User";
 
-import { setUsers, setSignupSubmit, setSubmitSuccess } from "../../features/users/usersInfoSlice";
+import { setUsers, setUsersSent, setSubmitSuccess } from "../../features/users/usersInfoSlice";
 
 import FormBuilder from "../utilityComponents/FormBuilder/FormBuilder";
 
@@ -15,26 +15,28 @@ const Signup: React.FC = (): JSX.Element => {
   const dispatch = useAppDispatch();
 
   const users: User[] = useAppSelector((state) => state.users.users);
-  const isSignupSubmit: boolean = useAppSelector((state) => state.users.isSignupSubmit);
+  const isUsersSent: boolean = useAppSelector((state) => state.users.isUsersSent);
   const isSubmitSuccess: boolean = useAppSelector((state) => state.users.isSubmitSuccess);
 
   const [values, setValues] = useState<User>({ username: "", password: "", confirmPassword: "" });
   const [isExistUser, setExistUser] = useState<boolean>(false);
 
   useEffect(() => {
-    dispatch(setSubmitSuccess(false));
+    const usersFromStorage = localStorage.getItem("Users");
+    usersFromStorage && dispatch(setUsers(JSON.parse(usersFromStorage)));
   }, []);
 
   useEffect(() => {
-    isSignupSubmit && dispatch(setSignupSubmit(false));
-  }, [isSignupSubmit]);
+    isSubmitSuccess && setTimeout(() => dispatch(setSubmitSuccess(false)), 2000);
+  }, [isSubmitSuccess]);
 
   useEffect(() => {
-    if (users.length !== 0) {
+    if (isUsersSent) {
       localStorage.setItem("Users", JSON.stringify(users));
-      dispatch(setSignupSubmit(true));
+      dispatch(setSubmitSuccess(true));
+      dispatch(setUsersSent(false));
     }
-  }, [users]);
+  }, [isUsersSent]);
 
   const updateUsers = (__values: User): void => {
     setValues(__values);
@@ -50,12 +52,10 @@ const Signup: React.FC = (): JSX.Element => {
     if (repeatUser) {
       setExistUser(true);
     } else {
-      const usersFromStorage = localStorage.getItem("Users");
-      usersFromStorage ? dispatch(setUsers([...JSON.parse(usersFromStorage), values])) : dispatch(setUsers([values]));
+      dispatch(setUsers([...users, values]));
       setExistUser(false);
+      dispatch(setUsersSent(true));
     }
-
-    dispatch(setSubmitSuccess(true));
   };
 
   return (

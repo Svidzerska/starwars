@@ -30,18 +30,17 @@ const FormBuilder: React.FC<Props> = ({
 }): JSX.Element => {
   const dispatch = useAppDispatch();
 
-  const isSignupSubmit: boolean = useAppSelector((state) => state.users.isSignupSubmit);
+  const isUsersSent: boolean = useAppSelector((state) => state.users.isUsersSent);
 
   const [values, setValues] = useState<{ [id: string]: string }>({});
   const [password, setPassword] = useState<string>("");
   const [isValid, setValid] = useState<boolean>(false);
 
   useEffect(() => {
-    isSignupSubmit && setValues({});
-  }, [isSignupSubmit]);
+    isUsersSent && setValues({});
+  }, [isUsersSent]);
 
   useEffect(() => {
-    values.username && dispatch(setSubmitSuccess(false));
     validInputsArray.includes(false) ? setValid(false) : setValid(true);
   }, [values]);
 

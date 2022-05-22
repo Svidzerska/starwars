@@ -5,14 +5,14 @@ import { User } from "../../components/interfaces/User";
 interface InitialState {
   users: User[];
   currentUser: User | null;
-  isSignupSubmit: boolean;
+  isUsersSent: boolean;
   isSubmitSuccess: boolean;
 }
 
 const initialState: InitialState = {
   users: [],
   currentUser: null,
-  isSignupSubmit: false,
+  isUsersSent: false,
   isSubmitSuccess: false,
 };
 
@@ -26,8 +26,8 @@ export const usersInfoSlice = createSlice({
     setCurrentUser: (state: InitialState, action: PayloadAction<User | null>) => {
       state.currentUser = action.payload;
     },
-    setSignupSubmit: (state: InitialState, action: PayloadAction<boolean>) => {
-      state.isSignupSubmit = action.payload;
+    setUsersSent: (state: InitialState, action: PayloadAction<boolean>) => {
+      state.isUsersSent = action.payload;
     },
     setSubmitSuccess: (state: InitialState, action: PayloadAction<boolean>) => {
       state.isSubmitSuccess = action.payload;
@@ -36,6 +36,6 @@ export const usersInfoSlice = createSlice({
   extraReducers: (builder) => {},
 });
 
-export const { setUsers, setCurrentUser, setSignupSubmit, setSubmitSuccess } = usersInfoSlice.actions;
+export const { setUsers, setCurrentUser, setUsersSent, setSubmitSuccess } = usersInfoSlice.actions;
 
 export default usersInfoSlice.reducer;
