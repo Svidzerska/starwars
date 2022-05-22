@@ -7,7 +7,7 @@ import "./signup.scss";
 import { configSignup } from "./config/configSignup";
 import { User } from "../../components/interfaces/User";
 
-import { setUsers, setUsersSent, setSubmitSuccess } from "../../features/users/usersInfoSlice";
+import { setUsers, setUsersSent } from "../../features/users/usersInfoSlice";
 
 import FormBuilder from "../utilityComponents/FormBuilder/FormBuilder";
 
@@ -16,10 +16,10 @@ const Signup: React.FC = (): JSX.Element => {
 
   const users: User[] = useAppSelector((state) => state.users.users);
   const isUsersSent: boolean = useAppSelector((state) => state.users.isUsersSent);
-  const isSubmitSuccess: boolean = useAppSelector((state) => state.users.isSubmitSuccess);
 
   const [values, setValues] = useState<User>({ username: "", password: "", confirmPassword: "" });
   const [isExistUser, setExistUser] = useState<boolean>(false);
+  const [isSubmitSuccess, setSubmitSuccess] = useState<boolean>(false);
 
   useEffect(() => {
     const usersFromStorage = localStorage.getItem("Users");
@@ -27,13 +27,13 @@ const Signup: React.FC = (): JSX.Element => {
   }, []);
 
   useEffect(() => {
-    isSubmitSuccess && setTimeout(() => dispatch(setSubmitSuccess(false)), 2000);
+    isSubmitSuccess && setTimeout(() => setSubmitSuccess(false), 2000);
   }, [isSubmitSuccess]);
 
   useEffect(() => {
     if (isUsersSent) {
       localStorage.setItem("Users", JSON.stringify(users));
-      dispatch(setSubmitSuccess(true));
+      setSubmitSuccess(true);
       dispatch(setUsersSent(false));
     }
   }, [isUsersSent]);

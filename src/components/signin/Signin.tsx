@@ -7,7 +7,7 @@ import "./signin.scss";
 import { User } from "../interfaces/User";
 import { configSignin } from "./config/configSignin";
 
-import { setCurrentUser, setSubmitSuccess, setUsers } from "../../features/users/usersInfoSlice";
+import { setCurrentUser, setUsers } from "../../features/users/usersInfoSlice";
 
 import FormBuilder from "../utilityComponents/FormBuilder/FormBuilder";
 

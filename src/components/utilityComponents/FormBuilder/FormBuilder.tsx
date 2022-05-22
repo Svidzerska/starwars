@@ -7,8 +7,6 @@ import "./formBuilder.scss";
 import { Config } from "../../interfaces/Config";
 import { ValidationResult } from "../../interfaces/ValidationResult";
 
-import { setSubmitSuccess } from "../../../features/users/usersInfoSlice";
-
 interface Props {
   config: Config[];
   formName: string;
@@ -28,8 +26,6 @@ const FormBuilder: React.FC<Props> = ({
   linkName,
   updateUsers,
 }): JSX.Element => {
-  const dispatch = useAppDispatch();
-
   const isUsersSent: boolean = useAppSelector((state) => state.users.isUsersSent);
 
   const [values, setValues] = useState<{ [id: string]: string }>({});
