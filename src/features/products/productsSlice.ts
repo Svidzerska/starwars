@@ -24,6 +24,7 @@ const initialState: InitialState = {
 
 export const getPeople = createAsyncThunk<Entities>("people/getPeople", async () => {
   return products.getPeople()?.then((data: Entities) => {
+    console.log(data);
     return data; //payload - data
   }) as Promise<Entities>;
 });
@@ -51,9 +52,9 @@ export const productsSlice = createSlice({
 
   extraReducers: (builder) => {
     builder.addCase(getPeople.fulfilled, (state, action) => {
-      state.people.data = action.payload;
+      state.people.data = action.payload ? action.payload : null;
       state.people.isPending = false;
-      state.people.error = null;
+      state.people.error = action.payload ? null : "Upps... Something was wrong!";
     });
     builder.addCase(getPeople.pending, (state, _action) => {
       state.people.data = null;
@@ -67,9 +68,9 @@ export const productsSlice = createSlice({
     });
 
     builder.addCase(getStarships.fulfilled, (state, action) => {
-      state.starships.data = action.payload;
+      state.starships.data = action.payload ? action.payload : null;
       state.starships.isPending = false;
-      state.starships.error = null;
+      state.starships.error = action.payload ? null : "Upps... Something was wrong!";
     });
     builder.addCase(getStarships.pending, (state, _action) => {
       state.starships.data = null;
@@ -83,9 +84,9 @@ export const productsSlice = createSlice({
     });
 
     builder.addCase(getEntity.fulfilled, (state, action) => {
-      state.entity.data = action.payload;
+      state.entity.data = action.payload ? null : "Upps... Something was wrong!";
       state.entity.isPending = false;
-      state.entity.error = null;
+      state.entity.error = action.payload ? null : "Upps... Something was wrong!";
     });
     builder.addCase(getEntity.pending, (state, _action) => {
       state.entity.data = null;

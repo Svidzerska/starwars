@@ -8,6 +8,7 @@ import { getStarships } from "../../../features/products/productsSlice";
 import CardRender from "../utilityComponentsProducts/Card";
 import Header from "../utilityComponentsProducts/Header/Header";
 import WaitScreen from "../../utilityComponents/waitScreen/WaitScreen";
+import ErrorScreen from "../../utilityComponents/errorScreen/ErrorScreen";
 
 const Starships: React.FC = (): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -20,13 +21,17 @@ const Starships: React.FC = (): JSX.Element => {
 
   return (
     <>
-      {starships.isPending ? (
-        <WaitScreen />
+      {starships.error === null ? (
+        starships.isPending ? (
+          <WaitScreen />
+        ) : (
+          <>
+            <Header />
+            <CardRender entities={starships.data} />
+          </>
+        )
       ) : (
-        <>
-          <Header />
-          <CardRender entities={starships.data} />
-        </>
+        <ErrorScreen errorMessage={starships.error} />
       )}
     </>
   );

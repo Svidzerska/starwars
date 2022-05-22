@@ -17,6 +17,6 @@ const try_catch = async (url: string) => {
     return json;
   } catch (err) {
     console.log(err);
-    return err;
+    return false;
   }
 };
